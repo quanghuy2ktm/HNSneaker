@@ -8,14 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer IDProduct;
+	
+	@Column(name = "ProductStatus")
 	private boolean productStatus;
+	
+	@Column(name = "Title")
 	private String title;
 	
 	public Product() {

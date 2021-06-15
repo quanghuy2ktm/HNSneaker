@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Category_Product")
+@Table(name = "category_product")
 public class Category_Product {
 	
 	@Id
@@ -21,12 +21,37 @@ public class Category_Product {
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
+	
 	@ManyToOne
 	@JoinColumn(name = "Product_id")
 	private Product product;
 	
 	public Category_Product() {
 		
+	}
+
+	public Integer getIDCategoryProduct() {
+		return IDCategoryProduct;
+	}
+
+	public void setIDCategoryProduct(Integer iDCategoryProduct) {
+		IDCategoryProduct = iDCategoryProduct;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	
 	

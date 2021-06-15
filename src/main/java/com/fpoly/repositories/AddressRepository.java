@@ -8,4 +8,5 @@ import com.fpoly.model.Address;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
+    
 }

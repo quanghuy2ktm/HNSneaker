@@ -12,17 +12,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Bill")
+@Table(name = "bill")
 public class Bill {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer IDBill;
+	
+	@Column(name = "orderDate")
 	private Date orderDate;
+	
+	@Column(name = "orderStatus")
 	private String orderStatus;
+	
+	@Column(name = "orderTotal")
 	private Integer orderTotal;
+	
+	@Column(name = "shippingDate")
 	private Date shippingDate;
+	
+	@Column(name = "Buyer_status")
 	private String buyer_Status;
 	
 	@ManyToOne

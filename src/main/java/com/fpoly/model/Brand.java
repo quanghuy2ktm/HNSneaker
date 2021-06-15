@@ -10,14 +10,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Brand")
+@Table(name = "brand")
 public class Brand {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer IDBrand;
+	
+	@Column(name = "name")
 	private String name;
+	
 	@ManyToOne
 	@JoinColumn(name = "Product_id")
 	private Product product;

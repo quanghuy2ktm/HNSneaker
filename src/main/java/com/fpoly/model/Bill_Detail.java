@@ -12,25 +12,42 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Bill_Detail")
+@Table(name = "bill_detail")
 public class Bill_Detail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer IDBillDetail;
+	
+	@Column(name = "BillDetailStatus")
 	private boolean billDetailStatus;
+	
+	@Column(name = "Note")
 	private String note;
+	
+	@Column(name = "Note2")
 	private String note2;
+	
+	@Column(name = "qty")
 	private int qty;
+	
+	@Column(name = "size")
 	private String size;
+	
+	@Column(name = "price")
 	private Integer price;
+	
+	@Column(name = "color")
 	private String color;
+	
+	@Column(name = "CreateDate")
 	private Date createDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "Product_Detail_id")
 	private Product_Detail productDetail;
+	
 	@ManyToOne
 	@JoinColumn(name = "Bill_id")
 	private Bill bill;

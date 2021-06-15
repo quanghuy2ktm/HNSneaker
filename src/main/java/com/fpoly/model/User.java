@@ -11,21 +11,36 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer IDUser;
+	
+	@Column(name = "status")
 	private boolean status;
+
+	@Column(name = "firstName")
 	private String firstName;
+
+	@Column(name = "lastName")
 	private String lastName;
+
+	@Column(name = "passWord")
 	private String passWord;
+
+	@Column(name = "userName")
 	private String userName;
+
+	@Column(name = "PhoneNumber")
 	private String phoneNumber;
+
+	@Column(name = "SecondPhoneNumber")
 	private String secondPhoneNumber;
-	@OneToOne(cascade= CascadeType.ALL, orphanRemoval = true)
+	
+	@OneToOne
 	@JoinColumn(name="address_id")
 	private Address address;
 	

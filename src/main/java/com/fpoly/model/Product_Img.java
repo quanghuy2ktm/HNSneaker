@@ -10,23 +10,32 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Product_Img")
+@Table(name = "product_img")
 public class Product_Img {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer IDProductImg;
+
+	@Column(name = "Picture1")
 	private String picture1;
+
+	@Column(name = "Picture2")
 	private String picture2;
+
+	@Column(name = "Picture3")
 	private String picture3;
+
+	@Column(name = "Picture4")
 	private String picture4;
+
 	@ManyToOne
 	@JoinColumn(name = "Product_Detail_id")
 	private Product_Detail productDeltai;
-	
+
 	public Product_Img() {
-		
+
 	}
 
 	public Integer getIDProductImg() {
@@ -76,8 +85,5 @@ public class Product_Img {
 	public void setProductDeltai(Product_Detail productDeltai) {
 		this.productDeltai = productDeltai;
 	}
-	
-	
-	
 
 }

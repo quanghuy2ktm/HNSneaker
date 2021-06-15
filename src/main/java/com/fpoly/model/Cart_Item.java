@@ -10,30 +10,43 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Cart_Item")
+@Table(name = "cart_item")
 public class Cart_Item {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer IDCartItem;
+
+	@Column(name = "CartItemStatus")
 	private boolean cartItemStatus;
+
+	@Column(name = "color")
 	private String color;
+
+	@Column(name = "CartCode")
 	private String cartCode;
+
+	@Column(name = "qty")
 	private int qty;
+
+	@Column(name = "size")
 	private String size;
+
 	@ManyToOne
 	@JoinColumn(name = "Product_Detail_id")
 	private Product_Detail productDetail;
+
 	@ManyToOne
 	@JoinColumn(name = "cart_id")
 	private Cart cart;
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	public Cart_Item() {
-		
+
 	}
 
 	public Integer getIDCartItem() {
@@ -107,7 +120,5 @@ public class Cart_Item {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
-	
+
 }

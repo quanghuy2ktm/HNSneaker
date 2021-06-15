@@ -10,15 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Category")
+@Table(name = "category")
 public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer IDCategory;
+	
+	@Column(name = "CategoryName")
 	private String categoryName;
+
+	@Column(name = "CategoryListingDate")
 	private Date categoryListingDate;
+
+	@Column(name = "CategoryStatus")
 	private boolean categoryStatus;
 	
 	

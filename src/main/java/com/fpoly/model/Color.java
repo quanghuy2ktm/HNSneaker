@@ -10,13 +10,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Color")
+@Table(name = "color")
 public class Color {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer IDColor;
+	
+	@Column(name = "ColorName")
 	private String ColorName;
 	
 	@ManyToOne
