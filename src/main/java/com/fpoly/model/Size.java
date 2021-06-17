@@ -52,6 +52,11 @@ public class Size {
 	public void setProductDetail(Product_Detail productDetail) {
 		this.productDetail = productDetail;
 	}
+
+	@Override
+	public String toString() {
+		return "Size [IDSize=" + IDSize + ", value=" + value + ", productDetail=" + productDetail + "]";
+	}
 	
 	
 	

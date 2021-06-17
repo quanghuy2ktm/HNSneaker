@@ -27,8 +27,8 @@
 		<form th:action="@{save}" method="POST">
 				
 				<label>status</label>
-				 <input type="text" name="IDProductImg" placeholder="Enter your name">
-				 <label>status</label>
+				 <!-- <input type="text" name="IDProductImg" placeholder="Enter your name">
+				 <label>status</label> -->
 				 <input type="text" name="picture1" placeholder="Enter your name">
 				 <label>status</label>
 				 <input type="text" name="picture2" placeholder="Enter your name">
@@ -36,10 +36,12 @@
 				 <input type="text" name="picture3" placeholder="Enter your name">
 				 <label>status</label>
 				 <input type="text" name="picture4" placeholder="Enter your name">
-				<select th:field="*{productDeltai}">
-						<option th:each="id : ${productDeltai}" th:value="${id.IDProductDetail}"
-							th:text="${id.description}" />
-				</select> 
+				
+			<select name="productDeltai">
+				<option th:each="id : ${productDeltai}" th:value="${id.IDProductDetail}"
+					th:text="${id.description}" />
+			</select>
+			
 			<button>Submit</button>
 		</form>
 	</div>
@@ -63,7 +65,7 @@
 					<td th:text="*{list.productDeltai.description}"></td>
 					<td><a class="btn btn-danger"
 						th:href="@{delete/{id}(id=${list.IDProductImg})}">Delete</a>
- 						 <a th:href="@{updateForm/{id}(id=${list.IDProductImg})}">Update</a>
+ 						 <a th:href="@{update/{id}(id=${list.IDProductImg})}">Update</a>
  						</td>
  
 				</tr> 

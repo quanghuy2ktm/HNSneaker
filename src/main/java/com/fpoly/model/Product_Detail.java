@@ -154,4 +154,14 @@ public class Product_Detail {
 		this.product = product;
 	}
 
+	@Override
+	public String toString() {
+		return "Product_Detail [IDProductDetail=" + IDProductDetail + ", productStatus=" + productStatus + ", title="
+				+ title + ", title2=" + title2 + ", shortTitle=" + shortTitle + ", sku=" + sku + ", description="
+				+ description + ", stock=" + stock + ", price=" + price + ", listingDate=" + listingDate
+				+ ", Materials=" + Materials + ", product=" + product + "]";
+	}
+
+	
+	
 }

@@ -15,7 +15,7 @@ import com.fpoly.repositories.Product_DetailRepository;
 import com.fpoly.service.Product_DetailService;
 
 @Controller
-@RequestMapping("productDetail")
+@RequestMapping("/productDetail")
 public class Product_DetailController {
 
 	@Autowired

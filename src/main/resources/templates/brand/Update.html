@@ -20,17 +20,18 @@
 	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
 </head>
 <body>
-	<div th:each="list:${color}">
+	<div th:each="list:${brand}">
 		<h1>Address form</h1>
-		<form th:action="@{/color/update}" method="POST">
-			<label>id</label> <input type="text" name="IDRole"
-				th:value="*{list.IDColor}"> <label>tên</label> <input
-				type="text" name="ColorName" th:value="*{list.ColorName}"> <select
-				name="productDeltai">
-				<option th:each="id : ${productDeltai}"
-					th:value="${id.IDProductDetail}" th:text="${id.description}" />
+		<form th:action="@{/brand/update}" method="POST">
+			<label>id</label> 
+				<input type="text" name="IDBrand" th:value="*{list.IDBrand}">
+			<label>p1</label> 
+				<input type="text" name="name" placeholder="Enter your name" th:value="*{list.name}">
+			
+			 <select name="product">
+				<option th:each="id : ${product}" th:value="${id.IDProduct}"
+					th:text="${id.title}" />
 			</select>
-
 			<button>Submit</button>
 		</form>
 	</div>

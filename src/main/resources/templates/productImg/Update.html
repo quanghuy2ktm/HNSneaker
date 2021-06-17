@@ -20,15 +20,23 @@
 	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
 </head>
 <body>
-	<div th:each="list:${product}">
+	<div th:each="list:${pImg}">
 		<h1>Address form</h1>
-		<form th:action="@{/product/update}" method="POST">
-				<input type="text" name="IDProduct" th:value="*{list.IDProduct}">
-			<label>first</label> 
-				<input type="text" name="productStatus" placeholder="Enter your name" th:value="*{list.productStatus}">
-			<label>first</label> 
-				<input type="text" name="title" placeholder="Enter your name" th:value="*{list.title}">
-			
+		<form th:action="@{/productImg/update}" method="POST">
+			<label>id</label> 
+				<input type="text" name="IDProductImg" th:value="*{list.IDProductImg}">
+			<label>p1</label> 
+				<input type="text" name="picture1" placeholder="Enter your name" th:value="*{list.picture1}">
+			<label>p2</label> 
+				<input type="text" name="picture2" placeholder="Enter your name" th:value="*{list.picture2}">
+			<label>p3</label> 
+				<input type="text" name="picture3" placeholder="Enter your name" th:value="*{list.picture3}">
+			<label>p4</label> 
+				<input type="text" name="picture4" placeholder="Enter your name" th:value="*{list.picture4}">
+			 <select name="productDeltai">
+				<option th:each="id : ${productDeltai}" th:value="${id.IDProductDetail}"
+					th:text="${id.description}" />
+			</select>
 			<button>Submit</button>
 		</form>
 	</div>

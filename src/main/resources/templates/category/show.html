@@ -20,25 +20,24 @@
 	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
 </head>
 <style>
-
 </style>
 <body>
 	<div>
 		<h1>Address form</h1>
-		<form th:action="@{/color/save}" method="POST"> 
+		<form th:action="@{/category/save}" method="POST">
+				
+				<label>status</label>
+				 <input type="text" name="categoryName" placeholder="Enter your name">
+					<label>status</label>
+				 <input type="text" name="categoryListingDate" placeholder="YYYY-MM-DD">
+				 	<label>status</label>
+				 <input type="text" name="categoryStatus" placeholder="Enter your name">
+				 
 			
-			<label>Reciver Name</label> 
-				<input type="text" name="ColorName" placeholder="Enter your name">
-			
-			<label>Reciver Name</label> 
-				<select name="productDetail">
-				<option th:each="id : ${productDetail}" th:value="${id.IDProductDetail}"
-					th:text="${id.description}" />
-			</select>
 			<button>Submit</button>
 		</form>
 	</div>
-	 <div>
+	<div>
 		<table id="table1" class="display table table-striped dt-responsive">
 			<thead class="bg-primary">
 				<tr>
@@ -50,18 +49,21 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="list : ${color}">
-					<td th:text="*{list.ColorName}"></td>
-					<td th:text="*{list.productDetail.description}"></td>
-					<td><a class="btn btn-danger" th:href="@{delete/{id}(id=${list.IDColor})}">Delete</a> 
-					&nbsp <a th:href="@{update/{id}(id=${list.IDColor})}">Update</a></td>
-					
-				</tr>
+				<tr th:each="list : ${category}">
+					<td th:text="*{list.IDCategory}"></td>
+					<td th:text="*{list.categoryName}"></td>
+					<td th:text="*{list.categoryListingDate}"></td>
+						<td th:text="*{list.categoryStatus}"></td>
+					<td>
+					<a class="btn btn-danger" th:href="@{delete/{id}(id=${list.IDCategory})}">Delete</a>
+ 						 <a th:href="@{update/{id}(id=${list.IDCategory})}">Update</a>
+ 						</td>
+				</tr> 
 			</tbody>
 			<tfoot>
 
 			</tfoot>
 		</table>
-	</div> 
+	</div>
 </body>
 </html>

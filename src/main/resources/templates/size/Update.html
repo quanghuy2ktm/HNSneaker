@@ -19,49 +19,21 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
 </head>
-<style>
-
-</style>
 <body>
-	<div>
+	<div th:each="list:${size}">
 		<h1>Address form</h1>
-		<form th:action="@{/color/save}" method="POST"> 
+		<form th:action="@{/size/update}" method="POST">
+			<label>id</label> 
+				<input type="text" name="IDSize" th:value="*{list.IDSize}">
+			<label>p1</label> 
+				<input type="text" name="value" placeholder="Enter your name" th:value="*{list.value}">
 			
-			<label>Reciver Name</label> 
-				<input type="text" name="ColorName" placeholder="Enter your name">
-			
-			<label>Reciver Name</label> 
-				<select name="productDetail">
+			 <select name="productDetail">
 				<option th:each="id : ${productDetail}" th:value="${id.IDProductDetail}"
 					th:text="${id.description}" />
 			</select>
 			<button>Submit</button>
 		</form>
 	</div>
-	 <div>
-		<table id="table1" class="display table table-striped dt-responsive">
-			<thead class="bg-primary">
-				<tr>
-					<th style="color: white">#</th>
-					<th style="color: white">#</th>
-					<th style="color: white">#</th>
-					<th style="color: white">#</th>
-					<th style="color: white">Chức năng</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="list : ${color}">
-					<td th:text="*{list.ColorName}"></td>
-					<td th:text="*{list.productDetail.description}"></td>
-					<td><a class="btn btn-danger" th:href="@{delete/{id}(id=${list.IDColor})}">Delete</a> 
-					&nbsp <a th:href="@{update/{id}(id=${list.IDColor})}">Update</a></td>
-					
-				</tr>
-			</tbody>
-			<tfoot>
-
-			</tfoot>
-		</table>
-	</div> 
 </body>
 </html>
