@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+	crossorigin="anonymous" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
+</head>
+<style>
+</style>
+<body>
+	<div>
+		<h1>Address form</h1>
+		<form th:action="@{/productDetail/save}" method="POST">
+	
+				<label>status</label> <input type="text" name="productStatus"
+				placeholder="Enter your name">
+				<label>title</label> <input type="text" name="title"
+				placeholder="Enter your name">
+				<label>title2</label> <input type="text" name="title2"
+				placeholder="Enter your name">
+				<label>short</label> <input
+				type="text" name="shortTitle" placeholder="Enter your name">
+				<label>sku</label> <input type="text" name="sku"
+				placeholder="Enter your name">
+				<label>descrip</label> <input
+				type="text" name="description" placeholder="Enter your name">
+				<label>stock</label> <input type="number" name="stock"
+				placeholder="Enter your name"> 
+				<label>price</label> <input
+				type="number" name="price" placeholder="Enter your name">
+			<!-- 
+			Để lại fixx sau ....!
+			
+				<label>listingDate</label> <input type="text" name="listingDate"
+				placeholder="YYYY-MM-DD"> -->
+				<label>Materials</label> <input type="text" name="Materials"
+				placeholder="Enter your name">
+				<label>product</label> <input type="text" name="product"
+				placeholder="Enter your name">
+				
+				
+			<button>Submit</button>
+		</form>
+	</div>
+	<div>
+		<table id="table1" class="display table table-striped dt-responsive">
+			<thead class="bg-primary">
+				<tr>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">Chức năng</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="list : ${list}">
+					<td th:text="*{list.productStatus}"></td>
+					<td th:text="*{list.title}"></td>
+					<td th:text="*{list.title2}"></td>
+					<td th:text="*{list.shortTitle}"></td>
+					<td th:text="*{list.sku}"></td>
+					<td th:text="*{list.description}"></td>
+					<td th:text="*{list.stock}"></td>
+					<td th:text="*{list.price}"></td>
+					<td th:text="*{list.listingDate}"></td>
+					<td th:text="*{list.Materials}"></td>
+					<td th:text="*{list.product.title}"></td>
+					 <td><a class="btn btn-danger"
+						th:href="@{delete/{id}(id=${list.IDProductDetail})}">Delete</a> &nbsp 
+						<!--<a th:href="@{updateForm/{id}(id=${list.IDUser})}">Update</a></td> -->
+
+				</tr> 
+			</tbody>
+			<tfoot>
+
+			</tfoot>
+		</table>
+	</div>
+</body>
+</html>

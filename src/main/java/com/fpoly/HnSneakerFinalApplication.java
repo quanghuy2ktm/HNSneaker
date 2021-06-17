@@ -16,7 +16,7 @@ public class HnSneakerFinalApplication {
 	@Bean
 	public ClassLoaderTemplateResolver secondaryTemplateResolver() {
 	    ClassLoaderTemplateResolver secondaryTemplateResolver = new ClassLoaderTemplateResolver();
-	    secondaryTemplateResolver.setPrefix("templates/");
+	    secondaryTemplateResolver.setPrefix("hi/");
 	    secondaryTemplateResolver.setSuffix(".html");
 	    secondaryTemplateResolver.setTemplateMode(TemplateMode.HTML);
 	    secondaryTemplateResolver.setCharacterEncoding("UTF-8");

@@ -35,6 +35,10 @@ public class Role {
 	public void setRoleName(String RoleName) {
 		this.RoleName = RoleName;
 	}
+	@Override
+	public String toString() {
+		return "Role [IDRole=" + IDRole + ", RoleName=" + RoleName + "]";
+	}
 	
 	
 }

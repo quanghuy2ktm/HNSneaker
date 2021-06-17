@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+	crossorigin="anonymous" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
+</head>
+<style>
+</style>
+<body>
+	<div>
+		<h1>Address form</h1>
+		<form th:action="@{/userrole/save}" method="POST">
+
+			<select name="user">
+				<option th:each="id : ${user}" th:value="${id.IDUser}"
+					th:text="${id.userName}" />
+			</select> <select name="role">
+				<option th:each="id : ${role}" th:value="${id.IDRole}"
+					th:text="${id.RoleName}" />
+			</select>
+			<button>Submit</button>
+		</form>
+	</div>
+	<div>
+		<table id="table1" class="display table table-striped dt-responsive">
+			<thead class="bg-primary">
+				<tr>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">Chức năng</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="list : ${uroleList}">
+					<td th:text="*{list.user.userName}"></td>
+					<td th:text="*{list.role.roleName}"></td>
+					<td><a class="btn btn-danger"
+						th:href="@{delete/{id}(id=${list.IDUserRole})}">Delete</a> &nbsp <a
+						th:href="@{updateForm/{id}(id=${list.IDUserRole})}">Update</a></td>
+				</tr>
+			</tbody>
+			<tfoot>
+
+			</tfoot>
+		</table>
+	</div>
+</body>
+</html>
