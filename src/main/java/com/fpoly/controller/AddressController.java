@@ -39,9 +39,9 @@ public class AddressController {
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String UpdateAddress(Model model, @ModelAttribute("Address")Address address) {
 		
-		Address addressTemp = addressRepos.getById(address.getIDAdress());
+		System.out.println("id:"+address.getIDAdress());
 		
-		addressRepos.save(addressTemp);
+		addressRepos.save(address);
 		
 		List<Address> addressList = addressRepos.findAll();
 		model.addAttribute("addressList", addressList);

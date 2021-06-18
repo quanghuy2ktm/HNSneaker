@@ -22,7 +22,7 @@
 <body>
 	<div th:each="list:${addressTemp}">
 		<h1>Address form</h1>
-		<form th:action="@{update}" method="POST">
+		<form th:action="@{/address/update}" method="POST">
 				<input type="text" name="IDAdress" th:value="*{list.IDAdress}">
 			<label>Reciver Name</label> 
 				<input type="text" name="ReciverName" placeholder="Enter your name" th:value="*{list.ReciverName}">
