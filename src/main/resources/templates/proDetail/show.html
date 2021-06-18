@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+	crossorigin="anonymous" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
+</head>
+<style>
+</style>
+<body>
+	<div class="border" style="padding: 6px">
+		<h1>Product Detail form</h1>
+		
+		
+		<form th:action="@{/productDetail/save}" method="POST">
+		
+  			<div class="form-row" style="padding: 20px">
+   			 <div class="col-sm-5">
+     			 <input type="text" name="title" class="form-control" placeholder="Tên sản phẩm">
+    		</div>
+    		<div class="col-sm-5">
+    			  <input type="text" name="shortTitle" class="form-control" placeholder="Tên viết tắt">
+    		</div>
+  			</div>
+  			
+  			<!-- <select name="productStatus">
+						<option th:value="${id.IDProduct}" th:text="${id.title}" />
+			</select> -->
+				
+  			<div class="form-row" style="padding: 20px">
+   			 <div class="col-sm-5">
+     			 <input type="text" name="sku" class="form-control" placeholder="SKU">
+    		</div>
+    		<div class="col-sm-5">
+    			  <input type="text" name="description" class="form-control" placeholder="Mô tả sản phẩm">
+    		</div>
+  			</div>
+  			
+  			<div class="form-row" style="padding: 20px">
+   			 <div class="col-sm-5">
+     			 <input type="text" name="stock" class="form-control" placeholder="Số lượng">
+    		</div>
+    		<div class="col-sm-5">
+    			  <input type="text" name="price" class="form-control" placeholder="Giá bán">
+    		</div>
+  			</div>
+  			
+  			<div class="form-row" style="padding: 20px">
+   			 <div class="col-sm-5">
+     			 <input type="text" name="Materials" class="form-control" placeholder="Chất liệu">
+    		</div>
+    		<div class="col-sm-5">
+    			 <select class="custom-select" name="product">
+						<option th:each="id : ${productList}" th:value="${id.IDProduct}" th:text="${id.title}" />
+				</select>
+    		</div>
+  			</div>
+  			<button style="margin-left:40%" class="btn btn-success">Submit</button>
+		</form>
+	</div>
+	<div>
+		<table id="table1" class="display table table-striped dt-responsive">
+			<thead class="bg-primary">
+				<tr>
+					<!-- <th style="color: white">#</th> -->
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">Chức năng</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="list : ${list}">
+				
+				<!-- 	<td th:text="*{list.productStatus}"></td> -->
+					<td th:text="*{list.title}"></td>
+				 <td th:text="*{list.title2}"></td>
+					<td th:text="*{list.shortTitle}"></td>
+					<td th:text="*{list.sku}"></td>
+					<td th:text="*{list.description}"></td>
+					<td th:text="*{list.stock}"></td>
+					<td th:text="*{list.price}"></td>
+					<td th:text="*{list.listingDate}"></td>
+					<td th:text="*{list.Materials}"></td>
+					<td th:text="*{list.product.title}"></td>
+					 <td><a class="btn btn-danger"
+						th:href="@{delete/{id}(id=${list.IDProductDetail})}">Delete</a> &nbsp 
+						<a th:href="@{updateForm/{id}(id=${list.IDProductDetail})}">Update</a></td>
+
+				</tr> 
+			</tbody>
+			<tfoot>
+
+			</tfoot>
+		</table>
+	</div>
+</body>
+</html>

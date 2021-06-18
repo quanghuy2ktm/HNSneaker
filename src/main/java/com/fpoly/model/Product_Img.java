@@ -86,4 +86,12 @@ public class Product_Img {
 		this.productDeltai = productDeltai;
 	}
 
+	@Override
+	public String toString() {
+		return "Product_Img [IDProductImg=" + IDProductImg + ", picture1=" + picture1 + ", picture2=" + picture2
+				+ ", picture3=" + picture3 + ", picture4=" + picture4 + ", productDeltai=" + productDeltai + "]";
+	}
+
+	
+	
 }

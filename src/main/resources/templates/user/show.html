@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+	crossorigin="anonymous" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
+</head>
+<style>
+</style>
+<body>
+	<div>
+		<h1>Address form</h1>
+		<form th:action="@{save}" method="POST">
+	
+				<label>status</label> <input type="text" name="status"
+				placeholder="Enter your name">
+				<label>email</label> <input type="text" name="email"
+				placeholder="Enter your name">
+			<label>first</label> <input type="text" name="firstName"
+				placeholder="Enter your name">
+				 <label>lastname</label> <input
+				type="text" name="lastName" placeholder="Enter your name">
+			<label>pass</label> <input type="text" name="passWord"
+				placeholder="Enter your name">
+				 <label>username</label> <input
+				type="text" name="userName" placeholder="Enter your name">
+			<label>phone</label> <input type="text" name="phoneNumber"
+				placeholder="Enter your name"> 
+				<label>sc phone</label> <input
+				type="text" name="secondPhoneNumber" placeholder="Enter your name">
+				<label>add</label> <input type="text" name="address"
+				placeholder="Enter your name">
+				
+			<button>Submit</button>
+		</form>
+	</div>
+	<div>
+		<table id="table1" class="display table table-striped dt-responsive">
+			<thead class="bg-primary">
+				<tr>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">#</th>
+					<th style="color: white">Chức năng</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="list : ${userList}">
+					<td th:text="*{list.firstName}"></td>
+					<td th:text="*{list.lastName}"></td>
+					<td th:text="*{list.passWord}"></td>
+					<td th:text="*{list.userName}"></td>
+					<td th:text="*{list.phoneNumber}"></td>
+					<td th:text="*{list.secondPhoneNumber}"></td>
+					<td th:text="*{list.address.streetAddress}"></td>
+					 <td><a class="btn btn-danger"
+						th:href="@{delete/{id}(id=${list.IDUser})}">Delete</a> &nbsp 
+						<a th:href="@{update/{id}(id=${list.IDUser})}">Update</a></td>
+
+				</tr> 
+			</tbody>
+			<tfoot>
+
+			</tfoot>
+		</table>
+	</div>
+</body>
+</html>

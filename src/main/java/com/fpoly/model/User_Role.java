@@ -53,6 +53,11 @@ public class User_Role {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+	@Override
+	public String toString() {
+		return "User_Role [IDUserRole=" + IDUserRole + ", user=" + user + ", role=" + role + "]";
+	}
 	
 	
 }

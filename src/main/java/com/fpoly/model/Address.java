@@ -67,6 +67,12 @@ public class Address {
 		ReciverName = reciverName;
 	}
 
+	@Override
+	public String toString() {
+		return "Address [IDAdress=" + IDAdress + ", streetAddress=" + streetAddress + ", city=" + city
+				+ ", ReciverPhoneNumber=" + ReciverPhoneNumber + ", ReciverName=" + ReciverName + "]";
+	}
 
+	
 
 }

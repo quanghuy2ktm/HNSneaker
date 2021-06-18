@@ -52,6 +52,11 @@ public class Color {
 	public void setProductDetail(Product_Detail productDetail) {
 		this.productDetail = productDetail;
 	}
+
+	@Override
+	public String toString() {
+		return "Color [IDColor=" + IDColor + ", ColorName=" + ColorName + ", productDetail=" + productDetail + "]";
+	}
 	
 	
 	

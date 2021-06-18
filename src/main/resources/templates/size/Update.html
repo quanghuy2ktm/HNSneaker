@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+	crossorigin="anonymous" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
+</head>
+<body>
+	<div th:each="list:${size}">
+		<h1>Size form</h1>
+		<form th:action="@{/size/update}" method="POST">
+
+				<input type="text" name="IDSize" th:value="*{list.IDSize}" hidden="true">
+			<label>Size</label> 
+				<input type="text" name="value" placeholder="Enter your name" th:value="*{list.value}">
+			
+			 <select name="productDetail">
+				<option th:each="id : ${productDetail}" th:value="${id.IDProductDetail}"
+					th:text="${id.title}" />
+			</select>
+			<button>Submit</button>
+		</form>
+	</div>
+</body>
+</html>
