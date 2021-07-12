@@ -34,6 +34,9 @@
     				<option th:value="1" >Tạm khóa</option>
 				</select>
 				
+				<select class="custom-select" name="productDetail">
+						<option th:each="id : ${productDetail}" th:value="${id.IDProductDetail}" th:text="${id.title}" />
+				</select>
 			<button>Submit</button>
 		</form>
 	</div>

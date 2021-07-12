@@ -26,10 +26,12 @@ public class HomeController {
 	@Autowired
 	ProductRepository productRepos;
 
-	@RequestMapping(value = "")
+	@RequestMapping(value = "/abc")
 	public String getAll(Model model) {
+		
 		List<Product_Detail> list = product_DetailRepository.findAll();
 		model.addAttribute("list", list);
+		
 		List<Product> productList = productRepos.findAll();
 		model.addAttribute("productList", productList);
 

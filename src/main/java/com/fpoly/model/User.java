@@ -1,18 +1,43 @@
 package com.fpoly.model;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
+@NamedEntityGraph(
+		name= "UserComplete",
+		attributeNodes= { @NamedAttributeNode(value="userRoles", subgraph="role-subgraph") },
+		subgraphs= { 
+			@NamedSubgraph(name = "role-subgraph", attributeNodes = {  @NamedAttributeNode("role") }
+		)}
+	)
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements UserDetails{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,18 +50,19 @@ public class User {
 	@Column(name = "email")
 	private String email;
 	
-	
 	@Column(name = "firstName")
 	private String firstName;
 
 	@Column(name = "lastName")
 	private String lastName;
 
+	@NotNull
 	@Column(name = "passWord")
-	private String passWord;
+	private String password;
 
+	@NotNull
 	@Column(name = "userName")
-	private String userName;
+	private String username;
 
 	@Column(name = "PhoneNumber")
 	private String phoneNumber;
@@ -48,8 +74,37 @@ public class User {
 	@JoinColumn(name="address_id")
 	private Address address;
 	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Set<User_Role> userRoles = new HashSet<>();
+	
 	public User() {
 		
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+		
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public Set<User_Role> getUserRoles() {
+		return userRoles;
+	}
+	
+	public void setUserRoles(Set<User_Role> userRoles) {
+		this.userRoles = userRoles;
 	}
 
 	public Integer getIDUser() {
@@ -92,20 +147,8 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public String getPassWord() {
-		return passWord;
-	}
-
 	public void setPassWord(String passWord) {
-		this.passWord = passWord;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
+		this.password = passWord;
 	}
 
 	public String getPhoneNumber() {
@@ -135,8 +178,35 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [IDUser=" + IDUser + ", status=" + status + ", email=" + email + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", passWord=" + passWord + ", userName=" + userName + ", phoneNumber="
+				+ ", lastName=" + lastName + ", passWord=" + password + ", userName=" + username + ", phoneNumber="
 				+ phoneNumber + ", secondPhoneNumber=" + secondPhoneNumber + ", address=" + address + "]";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<GrantedAuthority> authorites = new HashSet<>();
+		userRoles.forEach(userRole -> authorites.add(new Authority(userRole.getRole().getRoleName())));
+		return authorites;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 	
 	

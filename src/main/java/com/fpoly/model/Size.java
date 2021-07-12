@@ -29,6 +29,11 @@ public class Size {
 		
 	}
 
+	public Size(String size, Product_Detail productDetail2) {
+		this.value = size;
+		this.productDetail = productDetail2;
+	}
+
 	public Integer getIDSize() {
 		return IDSize;
 	}

@@ -1,21 +1,20 @@
 package com.fpoly.service;
 
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
 import com.fpoly.model.User;
-import com.fpoly.repositories.UserRepository;
 
-@Service
-public class UserService {
+public interface UserService {
 	
-	@Autowired
-	UserRepository userRepository;
+	com.fpoly.model.User findById(Integer id);
 	
-	public Optional<User> findById(int id){
-		return userRepository.findById(id);
-	};
+	User findByUsername(String username);
+		
+	User findByEmail(String email);
+		
+	void save(User user);
 	
+	User createUser(String username, String email,  String password, List<String> roles);
+
 }

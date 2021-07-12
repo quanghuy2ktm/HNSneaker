@@ -49,7 +49,7 @@
 			<tbody>
 				<tr th:each="list : ${color}">
 					<td th:text="*{list.ColorName}"></td>
-					<td th:text="*{list.productDetail.title}"></td>
+					<td th:text="*{list.productDetail}"></td>
 					<td><a class="btn btn-danger" th:href="@{delete/{id}(id=${list.IDColor})}">Delete</a> 
 					&nbsp <a th:href="@{update/{id}(id=${list.IDColor})}">Update</a></td>
 					

@@ -1,5 +1,7 @@
 package com.fpoly.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,6 +47,25 @@ public class Cart_Item {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	
+	public boolean canUpdateQty(Integer qty) {
+		return qty == null || qty <= 0 || this.getProductDetail().hasStock(qty);
+	}
+	
+	public BigDecimal getSubtotal() {
+		return new BigDecimal(productDetail.getPrice()).multiply(new BigDecimal(qty));
+	}
+
+	public void addQuantity(int qty) {
+		if (qty > 0) {
+			this.qty = this.qty + qty;
+		}
+	}
+	
+	public boolean hasSameSizeThan(String size2) {
+		return this.size.equals(size2);
+	}
+	
 	public Cart_Item() {
 
 	}

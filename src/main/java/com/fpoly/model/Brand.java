@@ -25,9 +25,30 @@ public class Brand {
 	@JoinColumn(name = "Product_id")
 	private Product product;
 	
+	@ManyToOne
+	@JoinColumn(name = "Product_Detail_id")
+	private Product_Detail productDetail;
+	
 	public Brand() {
 		
 	}
+
+	
+	public Brand(String brandTemp, Product_Detail productDetail2) {
+		this.name = brandTemp;
+		this.productDetail = productDetail2;
+	}
+
+
+	public Product_Detail getProductDetail() {
+		return productDetail;
+	}
+
+
+	public void setProductDetail(Product_Detail productDetail) {
+		this.productDetail = productDetail;
+	}
+
 
 	public Integer getIDBrand() {
 		return IDBrand;

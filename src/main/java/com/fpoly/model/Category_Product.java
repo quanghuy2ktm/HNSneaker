@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "category_product")
 public class Category_Product {
-	
+	//entity này làm láo
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

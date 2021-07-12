@@ -1,5 +1,7 @@
 package com.fpoly.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,9 +35,16 @@ public class Product_Img {
 	@ManyToOne
 	@JoinColumn(name = "Product_Detail_id")
 	private Product_Detail productDeltai;
+	
+	
 
 	public Product_Img() {
 
+	}
+
+	public Product_Img(String image, Product_Detail productDetail) {
+		this.picture1 = image;
+		this.productDeltai = productDetail;
 	}
 
 	public Integer getIDProductImg() {

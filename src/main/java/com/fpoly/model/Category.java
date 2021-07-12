@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,9 +29,44 @@ public class Category {
 	@Column(name = "CategoryStatus")
 	private boolean categoryStatus;
 	
+	@ManyToOne
+	@JoinColumn(name = "Product_id")
+	private Product product;
 	
+	@ManyToOne
+	@JoinColumn(name = "Product_Detail_id")
+	private Product_Detail productDetail;
+	
+	
+	public Product_Detail getProductDetail() {
+		return productDetail;
+	}
+
+
+	public void setProductDetail(Product_Detail productDetail) {
+		this.productDetail = productDetail;
+	}
+
+
 	public Category() {
 		
+	}
+
+
+	public Category(String categoryTemp, Product_Detail productDetail2, Date date) {
+		this.categoryName = categoryTemp;
+		this.productDetail = productDetail2;
+		this.categoryListingDate = date;
+	}
+
+
+	public Product getProduct() {
+		return product;
+	}
+
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 

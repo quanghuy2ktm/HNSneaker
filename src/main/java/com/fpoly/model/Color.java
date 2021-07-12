@@ -25,8 +25,15 @@ public class Color {
 	@JoinColumn(name = "Product_Detail_id")
 	private Product_Detail productDetail;
 	
+	
+	
 	public Color() {
 		
+	}
+
+	public Color(String colortemp, Product_Detail productDetail2) {
+		this.ColorName = colortemp;
+		this.productDetail = productDetail2;
 	}
 
 	public Integer getIDColor() {
@@ -53,11 +60,6 @@ public class Color {
 		this.productDetail = productDetail;
 	}
 
-	@Override
-	public String toString() {
-		return "Color [IDColor=" + IDColor + ", ColorName=" + ColorName + ", productDetail=" + productDetail + "]";
-	}
-	
 	
 	
 	

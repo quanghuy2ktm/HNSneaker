@@ -12,14 +12,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fpoly.model.Product;
+import com.fpoly.model.Product_Detail;
 import com.fpoly.model.User_Role;
 import com.fpoly.repositories.ProductRepository;
+import com.fpoly.repositories.Product_DetailRepository;
 import com.fpoly.service.ProductService;
 
 @Controller
 @RequestMapping("product")
 public class ProductController {
 
+	
+	@Autowired
+	Product_DetailRepository productDetailRepos;
+	
 	@Autowired
 	ProductRepository productRepository;
 	
@@ -30,6 +36,14 @@ public class ProductController {
 	public String getAll(Model model) {
 		
 		List<Product> product = productRepository.findAll();
+		
+		List<Product_Detail> pd = productDetailRepos.findAll();
+		
+		for(int i =0; i<product.size();i++) {
+			System.out.println(product.get(i).getProductDetail());
+		}
+		
+		model.addAttribute("productDetail", pd);
 		
 		model.addAttribute("product" , product);
 		
@@ -49,11 +63,11 @@ public class ProductController {
 	@RequestMapping("/updateForm/{id}")
 	public String updateProduct(@PathVariable("id") int id, Model model) {
 		Optional<Product> product = productService.findById(id);
-		List<Product> productlist = productRepository.findAll();
+		List<Product_Detail> pd = productDetailRepos.findAll();
 		if (product.isPresent()) {
 			model.addAttribute("product", product.get());
 		}
-		model.addAttribute("productList", productlist);
+		model.addAttribute("productDetail", pd);
 		return "product/Update";
 	}
 

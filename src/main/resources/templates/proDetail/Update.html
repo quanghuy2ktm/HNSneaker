@@ -1,26 +1,126 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head th:replace="common/header :: common-header" />
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-	crossorigin="anonymous" />
-
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
-
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
-</head>
 <body>
-	<div th:each="list:${ProductDetail}">
+<div th:replace="adminHome :: navbarAdmin"></div>
+
+<div th:each="list:${ProductDetail}">
+
+	
+	
+<div class="border" style="padding: 6px; padding-bottom: 0px">
+		
+		<h1>Sửa thông tin sản phẩm</h1>
+		
+		<form th:action="@{/productDetail/update}" method="POST">
+		
+  			<div class="rounded container" style="padding: 2% ; width: 60%">
+  			
+  			 <div class="form-group">
+     			<h1>Sửa thông tin sản phẩm</h1>
+    		</div>
+    		
+    		 <div class="form-group">
+  			<input hidden="true"  name="IDProductDetail" class="form-control" th:value="*{list.IDProductDetail}">
+
+  			</div>
+   			 <div class="form-group">
+     			 <input  type="text" name="title" class="form-control" placeholder="Tên sản phẩm" th:value="*{list.title}">
+    		</div>
+    		
+    		<div class="form-group">
+    		<select name="productStatus" class="form-control">
+    		
+						<option th:value="${list.productStatus}" th:text="*{list.productStatus}?'Mở bán':'Tạm khóa'" selected="selected" hidden=""/>
+						<option th:value="false">Tạm khóa</option>
+						<option th:value="true">Mở bán</option>
+			</select>
+			</div>
+			
+    		<div class="form-inline form-group">
+    		
+    		<div class="form-group" style="margin-right: 20%">
+    			  <input type="text" name="shortTitle" class="form-control" placeholder="Tên viết tắt" th:value="*{list.shortTitle}">
+    		</div>
+    		
+    		<div class="form-group">
+     			 <input type="text" name="sku" class="form-control" placeholder="SKU" th:value="*{list.sku}">
+    		</div>
+    		
+  			</div>
+				
+   			<div class="form-inline form-group">
+    		
+    		<div class="form-group" style="margin-right: 20%">
+    			  <input type="number" name="stock" class="form-control" placeholder="Số lượng" th:value="*{list.stock}">
+    		</div>
+    		
+    		<div class="form-group">
+     			 <input type="number" name="price" class="form-control" placeholder="Giá bán" th:value="*{list.price}">&nbsp <h4>₫</h4>
+    		</div>
+    		
+  			</div>
+  			
+    		<div class="form-group">
+    			  <textarea name="description" class="form-control" placeholder="Mô tả sản phẩm" th:text="*{list.description}" rows="5"></textarea>
+    		</div>
+  			
+   			<div class="form-group">
+     			 <input name="prodImg" data-role="tagsinput" class="form-control" placeholder="Ảnh" th:value="*{preselectedProdImg}"/>
+    		</div>
+<!--     		<div class="col-sm-5">
+    			 <select class="custom-select" name="product">
+						<option th:each="id : ${productList}" th:value="${id.IDProduct}" th:text="${id.title}" />
+				</select>
+    		</div> -->
+    		
+    		<div class="form-inline form-group">
+          	<div class="form-group">
+            <input type="text" class="form-control" id="sizes"  name="size" data-role="tagsinput" placeholder="Kích cỡ" th:value="${preselectedSizes}">
+         	</div> &nbsp;&nbsp;
+          	 <div class="form-group">
+            <button type="button" id="btn-size" class="btn btn-light badge badge-pill badge-dark p-2 mt-2 btn-size"  th:each="item : ${sizeList}" th:text="${item}"></button>           
+          </div>        
+        </div>
+  			
+  			<div class="form-inline form-group">
+          	<div class="form-group">
+            <input type="text" class="form-control" id="categories" name="categories" data-role="tagsinput" placeholder="Thể loại" th:value="${preselectedCategories}" required="required">
+         	 </div>&nbsp;&nbsp;
+          	 <div class="form-group">
+            <button type="button" class="btn btn-light badge badge-pill badge-dark p-2 mt-2 btn-category" th:each="item : ${categoryList}" ><span th:text="${item}"></span></button>           
+          </div>        
+        </div>
+        
+        	<div class="form-inline form-group">
+          	<div class="form-group">
+            <input type="text" class="form-control" id="color" name="colors" data-role="tagsinput" placeholder="Màu sắc" th:value="${preselectedColor}">
+         	 </div>&nbsp;&nbsp;
+          	 <div class="form-group">
+            <button type="button" id="btn-color" class="btn btn-light badge badge-pill badge-dark p-2 mt-2 btn-color" th:each="item : ${colorList}"><span th:text="${item}"></span></button>           
+          </div>        
+        </div>
+        
+        	<div class="form-inline form-group">
+          	<div class="form-group">
+            <input type="text" class="form-control" id="brands" name="brands" data-role="tagsinput" placeholder="Nhãn hiệu" th:value="${preselectedBrands}">
+         	 </div>&nbsp;&nbsp;
+          	 <div class="form-group">
+            <button type="button" class="btn btn-light badge badge-pill badge-dark p-2 mt-2 btn-brand" th:each="item : ${brandList}" th:text="${item}"></button>           
+          </div>        
+        </div>
+        
+        	<button style="margin-left:40%" class="btn btn-success"><i class="fas fa-save"></i> SUBMIT </button>
+        	
+        </div>
+        
+  			
+		</form>
+	</div>
+</div>
+	<!-- <div th:each="list:${ProductDetail}">
 		<div class="border" style="padding: 6px">
 		<h1>Product Detail form</h1>
 		
@@ -39,9 +139,9 @@
     		</div>
   			</div>
   			
-  			<!-- <select name="productStatus">
+  			<select name="productStatus">
 						<option th:value="${id.IDProduct}" th:text="${id.title}" />
-			</select> -->
+			</select>
 				
   			<div class="form-row" style="padding: 20px">
    			 <div class="col-sm-5">
@@ -75,6 +175,8 @@
   			<button style="margin-left:40%" class="btn btn-success">Submit</button>
 		</form>
 	</div>
-	</div>
+	</div> -->
+	
+	
 </body>
 </html>

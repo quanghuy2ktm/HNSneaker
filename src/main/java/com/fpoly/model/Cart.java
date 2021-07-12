@@ -1,5 +1,6 @@
 package com.fpoly.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -27,7 +28,7 @@ public class Cart {
 	private String orderStatus;
 
 	@Column(name = "orderTotal")
-	private Integer orderTotal;
+	private BigDecimal orderTotal;
 
 	@Column(name = "shippingDate")
 	private Date shippingDate;
@@ -67,12 +68,12 @@ public class Cart {
 		this.orderStatus = orderStatus;
 	}
 
-	public Integer getOrderTotal() {
+	public BigDecimal getOrderTotal() {
 		return orderTotal;
 	}
 
-	public void setOrderTotal(Integer orderTotal) {
-		this.orderTotal = orderTotal;
+	public void setOrderTotal(BigDecimal bigDecimal) {
+		this.orderTotal = bigDecimal;
 	}
 
 	public Date getShippingDate() {

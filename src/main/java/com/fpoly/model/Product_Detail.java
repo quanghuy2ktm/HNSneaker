@@ -1,13 +1,17 @@
 package com.fpoly.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -42,7 +46,7 @@ public class Product_Detail {
 	private int stock;
 
 	@Column(name = "price")
-	private Integer price;
+	private double price;
 
 	@Column(name = "ListingDate")
 	private Date listingDate;
@@ -53,6 +57,78 @@ public class Product_Detail {
 	@OneToOne
 	@JoinColumn(name = "Product_id")
 	private Product product;
+
+	@OneToMany(mappedBy = "productDeltai",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Product_Img> ProductImg;
+	
+	@OneToMany(mappedBy = "productDetail",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Size> size;
+	
+	@OneToMany(mappedBy = "productDetail",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Color> color;
+	
+	@OneToMany(mappedBy = "productDetail",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Brand> brand;
+	
+	@OneToMany(mappedBy = "productDetail",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Category> category;
+	
+	
+	
+	public boolean hasStock(int amount) {
+		return (this.getStock() > 0) && (amount <= this.getStock());
+	}
+	
+	public void decreaseStock(int amount) {
+		this.stock -= amount;
+	}
+	
+	
+	
+	
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public Set<Category> getCategory() {
+		return category;
+	}
+
+	public void setCategory(Set<Category> category) {
+		this.category = category;
+	}
+
+	public Set<Product_Img> getProductImg() {
+		return ProductImg;
+	}
+
+	public void setProductImg(Set<Product_Img> productImg) {
+		ProductImg = productImg;
+	}
+
+	public Set<Size> getSize() {
+		return size;
+	}
+
+	public void setSize(Set<Size> size) {
+		this.size = size;
+	}
+
+	public Set<Color> getColor() {
+		return color;
+	}
+
+	public void setColor(Set<Color> color) {
+		this.color = color;
+	}
+
+	public Set<Brand> getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Set<Brand> brand) {
+		this.brand = brand;
+	}
 
 	public Product_Detail() {
 
@@ -122,11 +198,11 @@ public class Product_Detail {
 		this.stock = stock;
 	}
 
-	public Integer getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(Integer price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

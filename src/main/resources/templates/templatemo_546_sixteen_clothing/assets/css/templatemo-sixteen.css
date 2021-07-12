@@ -246,9 +246,9 @@ header .navbar {
 	outline: none;
 }
 .navbar .navbar-brand h2 {
-	color: #fff;
+	color: blue;
 	text-transform: uppercase;
-	font-size: 24px;
+	font-size: 200px;
 	font-weight: 700;
 	-webkit-transition: all .3s ease 0s;
     -moz-transition: all .3s ease 0s;
@@ -282,7 +282,7 @@ header .navbar {
 .navbar .navbar-nav .nav-link.active,
 .navbar .navbar-nav .nav-link.show,
 .navbar .navbar-nav .show>.nav-link {
-	color: #fff;
+	color: black;
 	padding-bottom: 25px;
 	border-bottom: 3px solid #f33f3f;
 }
@@ -417,12 +417,12 @@ header .navbar {
 }
 
 .product-item {
-	border: 1px solid #eee;
+	 border: 1px solid #eee; 
 	margin-bottom: 30px;
 }
 
 .product-item .down-content {
-	padding: 30px;
+	padding: 20px;
 	position: relative;
 }
 

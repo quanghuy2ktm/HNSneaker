@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"></script>
 <link rel="stylesheet"
@@ -35,6 +34,9 @@
     				<option th:value="1" >Tạm khóa</option>
 				</select>
 				
+				 <select class="custom-select" name="productDetail" style="width: 200px">
+						<option th:each="id : ${productDetail}" th:value="${id.IDProductDetail}" th:text="${id.title}" />
+				</select>
 			<button>Submit</button>
 		</form>
 	</div>
@@ -44,6 +46,9 @@
 				<tr>
 					<th style="color: white">#</th>
 					<th style="color: white">#</th>
+					<th style="color: white">Danh mục sản phẩm</th>
+					<th style="color: white">Số lượng</th>
+					<th style="color: white">Giá</th>
 					<th style="color: white">Chức năng</th>
 				</tr>
 			</thead>
@@ -52,7 +57,9 @@
 					
 					<td th:text="*{list.title}"></td>
 					<td th:text="*{list.productStatus}?'Tạm khóa':'Đang bán'"></td>
-					
+					<td><div th:each="item : ${list.category}"><span class="badge badge-secondary mt-1 mr-1" th:text="*{item.categoryName}"></span></div></td>
+					<td><div th:each="item : ${list.productDetail}"><span th:text="*{item.getStock()}"></span></div></td>
+					<td><div th:each="item : ${list.productDetail}"><span th:text="*{item.price}"></span></div></td>
 					 <td><a class="btn btn-danger"
 						th:href="@{delete/{id}(id=${list.IDProduct})}">Delete</a> &nbsp 
  						<a th:href="@{updateForm/{id}(id=${list.IDProduct})}">Update</a></td>

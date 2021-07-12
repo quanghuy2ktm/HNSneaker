@@ -56,12 +56,9 @@ public class UserController {
 	@RequestMapping("/update/{id}")
 	public String updateUser(@PathVariable int id, Model model) {
 
-		Optional<User> user = userService.findById(id);
+		User user = userService.findById(id);
 
-
-		if (user.isPresent()) {
-			model.addAttribute("userTemp", user.get());
-		}
+			model.addAttribute("userTemp", user);
 		
 		List<Address> address1 = addressRepository.findAll();
 

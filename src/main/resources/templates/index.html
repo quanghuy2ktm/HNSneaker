@@ -1,215 +1,298 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-  <head>
+<head th:replace="common/header :: common-header">
+<style>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+/* common */
+.ribbon {
+	width: 150px;
+	height: 150px;
+	overflow: hidden;
+	position: absolute;
+}
 
-    <title>Sixteen Clothing HTML Template</title>
+.ribbon::before, .ribbon::after {
+	position: absolute;
+	z-index: -1;
+	content: '';
+	display: block;
+	border: 5px solid #2980b9;
+}
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--
+.ribbon span {
+	position: absolute;
+	display: block;
+	width: 225px;
+	padding: 15px 0;
+	background-color: #f33f3f;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+	color: #fff;
+	font: 700 18px/1 'Lato', sans-serif;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+	text-transform: uppercase;
+	text-align: center;
+}
 
-TemplateMo 546 Sixteen Clothing
+/* top left*/
+.ribbon-top-left {
+	top: -10px;
+	left: 6px;
+}
 
-https://templatemo.com/tm-546-sixteen-clothing
+.ribbon-top-left::before, .ribbon-top-left::after {
+	border-top-color: transparent;
+	border-left-color: transparent;
+}
 
--->
+.ribbon-top-left::before {
+	top: 0;
+	right: 0;
+}
 
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
+.ribbon-top-left::after {
+	bottom: 0;
+	left: 0;
+}
 
-  </head>
+.ribbon-top-left span {
+	right: -25px;
+	top: 30px;
+	transform: rotate(-45deg);
+}
 
-  <body>
+/* top right*/
+.ribbon-top-right {
+	top: -10px;
+	right: -10px;
+}
 
-    <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
-    <!-- ***** Preloader End ***** -->
+.ribbon-top-right::before, .ribbon-top-right::after {
+	border-top-color: transparent;
+	border-right-color: transparent;
+}
 
-    <!-- Header -->
-    <header class="">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-        <img style="width:75px" src="assets/images/HN.png"></img>
-         <a class="navbar-brand" ><h2>HN<em>SNEAKER</em></h2> </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="products.html">Our Products</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact Us</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+.ribbon-top-right::before {
+	top: 0;
+	left: 0;
+}
 
-    <!-- Page Content -->
-    <!-- Banner Starts Here -->
-    <div class="banner header-text">
-      <div class="owl-banner owl-carousel">
-        <div class="banner-item-03">
-          <div class="text-content">
-           
-            <h4></h4>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Banner Ends Here -->
+.ribbon-top-right::after {
+	bottom: 0;
+	right: 0;
+}
 
-    <div class="latest-products">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12" >
-            <div class="section-heading">
-              <h2>Latest Products</h2>
-              <a href="products.html">view all products <i class="fa fa-angle-right"></i></a>
-            </div>
-          </div>
-          
-        <!--   test -->
-          
-          <!--   test -->
-          
-          <!--   test -->
-          
-          <div class="col-md-4" th:each="list : ${list}">
-            <div class="product-item card-body">
-              <a class="card-img-top" href="#"><img src="assets/images/product_06.jpg" alt=""></a>
-              <div class="down-content">
-                <a th:text="*{list.title}"></a>
-                <h6 th:text="*{list.shortTitle}"></h6>
-              <p> <a th:text="*{list.price}"></a>&nbsp VNĐ</p>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+.ribbon-top-right span {
+	left: -25px;
+	top: 30px;
+	transform: rotate(45deg);
+}
 
-    <div class="best-features">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="section-heading">
-              <h2>About Sixteen Clothing</h2>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="left-content">
-              <h4>Looking for the best products?</h4>
-              <p><a rel="nofollow" href="https://templatemo.com/tm-546-sixteen-clothing" target="_parent">This template</a> is free to use for your business websites. However, you have no permission to redistribute the downloadable ZIP file on any template collection website. <a rel="nofollow" href="https://templatemo.com/contact">Contact us</a> for more info.</p>
-              <ul class="featured-list">
-                <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-                <li><a href="#">Consectetur an adipisicing elit</a></li>
-                <li><a href="#">It aquecorporis nulla aspernatur</a></li>
-                <li><a href="#">Corporis, omnis doloremque</a></li>
-                <li><a href="#">Non cum id reprehenderit</a></li>
-              </ul>
-              <a href="about.html" class="filled-button">Read More</a>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="right-image">
-              <img src="assets/images/feature-image.jpg" alt="">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+/* bottom left*/
+.ribbon-bottom-left {
+	bottom: -10px;
+	left: -10px;
+}
+
+.ribbon-bottom-left::before, .ribbon-bottom-left::after {
+	border-bottom-color: transparent;
+	border-left-color: transparent;
+}
+
+.ribbon-bottom-left::before {
+	bottom: 0;
+	right: 0;
+}
+
+.ribbon-bottom-left::after {
+	top: 0;
+	left: 0;
+}
+
+.ribbon-bottom-left span {
+	right: -25px;
+	bottom: 30px;
+	transform: rotate(225deg);
+}
+
+/* bottom right*/
+.ribbon-bottom-right {
+	bottom: -10px;
+	right: -10px;
+}
+
+.ribbon-bottom-right::before, .ribbon-bottom-right::after {
+	border-bottom-color: transparent;
+	border-right-color: transparent;
+}
+
+.ribbon-bottom-right::before {
+	bottom: 0;
+	left: 0;
+}
+
+.ribbon-bottom-right::after {
+	top: 0;
+	right: 0;
+}
+
+.ribbon-bottom-right span {
+	left: -25px;
+	bottom: 30px;
+	transform: rotate(-225deg);
+}
+
+.title {
+	color: black;
+	font-weight: bold;
+}
+
+.title:hover {
+	color: #f33f3f;
+}
+</style>
+<body>
+
+	<!-- ***** Preloader Start ***** -->
+	<div id="preloader">
+		<div class="jumper">
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</div>
+	<!-- ***** Preloader End ***** -->
+
+	<!-- Header -->
+	<div th:fragment="header">
+	<header class="" >
+		<nav class="navbar navbar-expand-lg navbar-light "
+			style="padding: 8px">
+			<div class="container">
+
+				<a class="navbar-brand" href="#"> <img width="100" height="80"
+					src="assets/images/HN.png" class="d-inline-block align-top" alt="" />
+
+				</a> <a class="navbar-brand"><h2>
+						HN<em>SNEAKER</em>
+					</h2> </a>
 
 
-    <div class="call-to-action">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="inner-content">
-              <div class="row">
-                <div class="col-md-8">
-                  <h4>Creative &amp; Unique <em>Sixteen</em> Products</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque corporis amet elite author nulla.</p>
-                </div>
-                <div class="col-md-4">
-                  <a href="#" class="filled-button">Purchase Now</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarResponsive" aria-controls="navbarResponsive"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active"><a class="nav-link"
+							href="index.html">Home <span class="sr-only">(current)</span>
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="products.html">Our
+								Products</a></li>
+						<li class="nav-item"><a class="nav-link" href="about.html">About
+								Us</a></li>
+						<li class="nav-item"><a class="nav-link" href="contact.html">Contact
+								Us</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<!-- Page Content -->
+	<!-- Banner Starts Here -->
+	<div class="banner header-text" th:fragment="banner">
+		<div class="owl-banner owl-carousel">
+			<div class="banner-item-03">
+				<div class="text-content">
+					<h4></h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<!-- Banner Ends Here -->
+
+	<div class="latest-products" th:fragment="product">
+		<div class="container">
+			<div th:replace="proDetail/store :: shop"></div> 
+		</div>
+	</div>
+
+
+
+	<footer th:fragment="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="inner-content">
+						<p>
+							Copyright &copy; 2020 Sixteen Clothing Co., Ltd. - Design: <a
+								rel="nofollow noopener" href="https://templatemo.com"
+								target="_blank">TemplateMo</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+	<!-- Additional Scripts -->
+	<script src="assets/js/custom.js"></script>
+	<script src="assets/js/owl.js"></script>
+	<script src="assets/js/slick.js"></script>
+	<script src="assets/js/isotope.js"></script>
+	<script src="assets/js/accordions.js"></script>
+	
+	<script type="text/javascript" src="/js/jquery.simplePagination.js"></script>
+	
+  	<div th:replace="common/header :: body-scripts"> </div>
+  <script>    
+    var sidebarContent = $('.accordion-sidebar').html()
+    $('#filterModal').on('show.bs.modal', function () {
+      // move filter contents to modal body
+      $(this).find('.modal-body').html('<div class="accordion accordion-caret accordion-sidebar accordion-modal">'+sidebarContent+'</div>')
+      // empty the sidebar filter contents
+      $('.accordion-sidebar:not(.accordion-modal)').html('')
+    }) 
+    $('#filterModal').on('hidden.bs.modal', function () {
+      $('.accordion-modal').remove() // remove modal filter contents
+      $('.accordion-sidebar').html(sidebarContent) // move filter contents back to the sidebar
+    })    
+    $('.button-sort').click(function () {
+      var value = $(this).val()
+      var text = $(this).text()      
+      $('#input-sort').val(value)
+      $('#dropdown-sort-text').text(text)      
+      $('#filter-form').submit()     
+    }) 
     
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="inner-content">
-              <p>Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
-            
-            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-    <!-- Additional Scripts -->
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/owl.js"></script>
-    <script src="assets/js/slick.js"></script>
-    <script src="assets/js/isotope.js"></script>
-    <script src="assets/js/accordions.js"></script>
-
-
-    <script language = "text/Javascript"> 
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-      if(! cleared[t.id]){                      // function makes it static and global
-          cleared[t.id] = 1;  // you could use true and false, but that's more typing
-          t.value='';         // with more chance of typos
-          t.style.color='#fff';
+	$(function() {    
+		$('#light-pagination').pagination({
+          items: $('#totalitems').val(),
+          itemsOnPage: $('#itemsperpage').val(),
+          currentPage: $('#page').val(),
+          cssStyle: 'light-theme',
+          useAnchors: false,
+          prevText: "<",
+          nextText: ">",
+          displayedPages: 1,
+          edges: 1,
+          onPageClick: function(pageNumber) {
+        	$('#page').val(pageNumber)
+            $('#filter-form').submit()     
           }
-      }
-    </script>
+    	});
+	});
+  </script>
 
-
-  </body>
+</body>
 
 </html>

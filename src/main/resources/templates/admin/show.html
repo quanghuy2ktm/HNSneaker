@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head th:replace="common/header :: common-header" />
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	
+	  var table = $('#table').DataTable({
+	    columnDefs: [
+	    { "width": "20%", "targets": 1 },	
+	    { "width": "20%", "targets": 6 },	
+	    { "width": "10%", "targets": 8 },
+	    {
+	      targets: [0,2,6,10,11,12],
+	      createdCell: function(cell) {
+	        var $cell = $(cell);
+
+
+	        $(cell).contents().wrapAll("<div class='content'></div>");
+	        var $content = $cell.find(".content");
+
+	        $(cell).append($("<a style='color:black' href='#table' class='badge badge-light'>...</a>"));
+	        $btn = $(cell).find("a");
+
+	        $content.css({
+	          "height": "50px",
+	          "overflow": "hidden"
+	        })
+	        $cell.data("isLess", true);
+
+	        $btn.click(function() {
+	          var isLess = $cell.data("isLess");
+	          $content.css("height", isLess ? "auto" : "50px")
+	          $(this).text(isLess ? "Rút gọn" : "...")
+	          $cell.data("isLess", !isLess)
+	        })
+	      }
+	    
+	    
+	    }]
+	  });
+	  
+	  
+	 /*  $('#price').on('input', function(e){        
+		    $(this).val(formatCurrency(this.value.replace(/[, đ]/g,'')));
+		}).on('keypress',function(e){
+		    if(!$.isNumeric(String.fromCharCode(e.which))) e.preventDefault();
+		}).on('paste', function(e){    
+		    var cb = e.originalEvent.clipboardData || window.clipboardData;      
+		    if(!$.isNumeric(cb.getData('text'))) e.preventDefault();
+		});
+		function formatCurrency(number){
+		    var n = number.split('').reverse().join("");
+		    var n2 = n.replace(/\d\d\d(?!$)/g, "$&,");    
+		    return  n2.split('').reverse().join('') + ' đ';
+		} */
+	  
+	  
+	  
+	});
+
+</script>
+<body>
+
+	<div th:replace="adminHome :: navbarAdmin"> </div>
+	<div class="" style="margin:20px; padding-top: 100px">
+	<a style="margin-bottom: 10px" class="btn btn-success" th:href="@{/productDetail/getProductDetail}"><i class="fas fa-plus-circle"></i> Thêm sản phẩm mới</a>
+		<table id="table" class="table table-hover">
+			<thead class="bg-dark">
+				<tr>
+					<!-- <th style="color: white">#</th> -->
+					<th style="color: white">Tên</th>
+					<th style="color: white">Ảnh</th>
+					<th style="color: white">Size</th>
+					<th style="color: white">Trạng thái</th>
+					<th style="color: white">Tên ngắn</th>
+					<th style="color: white">Mã</th>
+					<th style="color: white">Mô tả</th>
+					<th style="color: white">Số lượng</th>
+					<th style="color: white">Giá</th>
+					<th style="color: white">Ngày listing</th>
+					<th style="color: white">Thể loại</th>
+					<th style="color: white">Nhãn hiệu</th>
+					<th style="color: white">Màu sắc</th>
+					<th style="color: white">Xóa</th>
+					<th style="color: white">Cập nhật</th>
+				</tr>
+			</thead>
+			<tbody class="bg-light">
+				<tr th:each="list : ${list}">
+					<td th:text="*{list.title}"></td>
+					<td><span th:each="item : ${list.ProductImg}"><img th:src="${item.picture1}" style="width:50px; margin:5px; max-height: 70px"/></span></td>
+					<td><div th:each="item : ${list.size}"><span class="badge badge-dark mt-3" th:text="${item.value}"></span></div></td>
+				 	<td th:text="*{list.productStatus}?'Mở bán':'Tạm khóa'" class="badge badge-dark mt-3"></td> 
+					<td th:text="*{list.shortTitle}"></td>
+					<td th:text="*{list.sku}"></td>
+					<td th:text="*{list.description}"></td>
+					<td th:text="*{list.stock}"></td>
+					<td><a th:text="*{list.price}"></a>&nbsp₫</td>
+					<td th:text="*{list.listingDate}"></td>
+					<td><div th:each="item : ${list.category}"><span class="badge badge-dark mt-3" th:text="${item.categoryName}"></span></div></td> 
+ 					<td><div th:each="item : ${list.brand}"><span class="badge badge-dark mt-3" th:text="${item.name}"></span></div></td> 
+					<td><div th:each="item : ${list.color}"><span class="badge badge-dark mt-3" th:text="${item.colorName}"></span></div></td>
+					 <td><a class="btn btn-danger" th:href="@{/productDetail/delete/{id}(id=${list.IDProductDetail})}"><i class="fas fa-trash-alt"></i></a></td>
+					 <td><a class="btn btn-primary" th:href="@{/productDetail/updateForm/{id}(id=${list.IDProductDetail})}"><i class="fas fa-edit"></i></a></td>
+				</tr> 
+			</tbody>
+			<tfoot>
+
+			</tfoot>
+		</table>
+	</div>
+</body>
+</html>

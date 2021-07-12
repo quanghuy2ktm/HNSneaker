@@ -44,6 +44,7 @@
 					<th style="color: white">#</th>
 					<th style="color: white">#</th>
 					<th style="color: white">#</th>
+					<th style="color: white">Product</th>
 					<th style="color: white">Chức năng</th>
 				</tr>
 			</thead>
@@ -52,6 +53,7 @@
 					<td th:text="*{list.categoryName}"></td>
 					<td th:text="*{list.categoryListingDate}"></td>
 					<td th:text="*{list.categoryStatus}?'Tạm khóa':'Đang mở'"></td>
+					
 					<td>
 					<a class="btn btn-danger" th:href="@{delete/{id}(id=${list.IDCategory})}">Delete</a>
  						 <a th:href="@{update/{id}(id=${list.IDCategory})}">Update</a>
