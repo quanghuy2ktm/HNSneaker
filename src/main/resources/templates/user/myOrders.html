@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org./1999/xhtml">
+<head th:replace="common/header :: common-header" />
+
+
+<body class="d-flex flex-column">
+  <div th:replace="common/header :: navbar"> </div>
+<div style="margin-top: 100px"></div>
+  <div class="container page-content">
+    <div class="row">
+      
+       <div class="col-md-4 col-lg-3">
+        <div class="card">
+        <div class="card-body text-center">
+            <img src="/image/user/user.png" width="100" height="100" alt="User" class="rounded-circle mb-3"><br>
+          <i class="fa fa-dot-circle" style="color:green"></i> <a class="bold mb-0" th:text="${#strings.capitalize(user.username)}"></a><br>
+         <small class="text-primary" th:text="'Lần cuối đăng nhập '+${#dates.format(#dates.createNow(), ' dd MMM, yyyy hh:mm')}"></small>       
+          </div>
+          <div class="list-group list-group-flush">
+            <a th:href="@{/my-profile}" class="list-group-item list-group-item-action"><i data-feather="user" class="mr-3"></i> Thông tin cá nhân</a>
+            <a th:href="@{/my-orders}" class="list-group-item list-group-item-action active"><i data-feather="shopping-bag" class="mr-3"></i> Đơn hàng</a>
+            <a th:href="@{/my-address}" class="list-group-item list-group-item-action"><i data-feather="map" class="mr-3"></i> Địa chỉ</a>
+            <a th:href="@{/logout}" class="list-group-item list-group-item-action text-danger"><i data-feather="log-out" class="mr-3"></i> Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+      
+       <div class="col mt-3 mt-md-0">
+          <div class="card">
+            <div class="card-body">
+              <h3>Lịch sử đặt hàng</h3><hr>
+              <div class="table-responsive">
+                <table id="table1" class="table table-hover" data-addclass-on-xs="table-sm">
+                  <thead class="bg-primary">
+                    <tr style="color: white">
+                      <th scope="col">Mã đơn hàng</th>
+                      <th scope="col">Ngày đặt</th>
+                      <th scope="col" class="text-right">Tổng tiền</th>
+                      <th scope="col" class="text-center">Trạng thái đơn hàng</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="order : ${orders}">
+                      <th scope="row" ><a th:href="@{/order-detail?order=}+${order.IDCart}" class="text-primary">ORD<span th:text="${order.IDCart}"></span></a></th>                      
+                      <td th:text="${#dates.format(order.orderDate, 'dd-MMM-yyyy')}"></td>
+                      <td class="text-right"><span th:text="${#numbers.formatDecimal(order.orderTotal, 0, 'COMMA', 0, 'POINT')}+' ₫'"></span></td>
+                       <td class="text-center" th:switch="${order.orderStatus}">
+                      <span th:case="'Chờ xét duyệt'" class="badge badge-warning rounded" th:text="${order.orderStatus}"></span>
+                       <span th:case="'Đang đóng gói'" class="badge badge-info rounded" th:text="${order.orderStatus}"></span>
+                        <span th:case="'Đang vận chuyển'" class="badge badge-secondary rounded" th:text="${order.orderStatus}"></span>
+                         <span th:case="'Hoàn thành'" class="badge badge-success rounded" th:text="${order.orderStatus}"></span>
+                          <span th:case="'Hủy đơn'" class="badge badge-danger rounded" th:text="${order.orderStatus}"></span>
+                      </td>
+                    </tr>                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+    </div>
+  </div> <!--  end container -->
+  
+  <div th:replace="common/header :: footer"> </div>
+  
+  
+  <div th:replace="common/header :: body-scripts"> </div>
+  	  <script type="text/javascript">
+	  $(document).ready(function() {
+		  $('#table1').DataTable({
+				"ordering": false,
+			  	"bPaginate": true,
+			    "bLengthChange": true,
+			    "bFilter": true,
+			    "bInfo": true,
+			    "bAutoWidth": false
+		  });
+	  });
+	  </script>
+</body>
+</html>

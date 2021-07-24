@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head th:replace="common/header :: common-header" />
+
+<body>
+
+	<div th:replace="adminHome :: navbarAdmin"> </div>
+	<div class="" style="margin:20px; padding-top: 50px">
+		
+		 <div th:if="${alert}" class="alert alert-danger alert-dismissible fade show" role="alert">
+	      <i class="fas fa-exclamation-triangle"></i>&nbsp<strong>Cập nhật trạng thái thất bại</strong>
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>   
+	    
+	    <div th:if="${alertSuccess}" class="alert alert-success alert-dismissible fade show" role="alert">
+	      <i class="fas fa-exclamation-triangle"></i>&nbsp<strong>Cập nhật đơn hàng thành công</strong>
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>   
+	    
+	    <div th:if="${alert}" class="alert alert-danger alert-dismissible fade show" role="alert">
+	      <i class="fas fa-exclamation-triangle"></i>&nbsp<strong th:text=${message}></strong>
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>   
+	    
+	   
+	    
+	<!-- <a style="margin-bottom: 10px" class="btn btn-success" th:href="@{/productDetail/getProductDetail}"><i class="fas fa-plus-circle"></i> Thêm sản phẩm mới</a>
+	 -->	
+	 <table id="table" class="table table-hover">
+			<thead class="bg-dark">
+				   <tr style="color: white">
+                      <th class="no-sort" scope="col">Mã đơn hàng</th>
+                      <th class="no-sort text-center" scope="col">Người đặt</th>
+                      <th class="no-sort text-center" scope="col">Số điện thoại</th>
+                      <th class="no-sort text-center" scope="col">Trạng thái đơn hàng</th>
+                      <th class="no-sort text-center" scope="col">Số tiền đã cọc</th>
+                      <th class="no-sort text-center" scope="col">Ngày đặt</th>
+<!--                       <th class="no-sort text-center" scope="col">Ngày nhận (dự tính)</th> -->
+                      <th scope="col" class="text-right">Tổng tiền</th>
+                      
+                   </tr>
+			</thead>
+			<tbody class="bg-light">
+				<tr th:each="order : ${cartList}">
+					 <th scope="row" ><a th:href="@{/admin/order-detail?order=}+${order.IDCart}" class="text-primary">ORD<span th:text="${order.IDCart}"></span></a></th>                      
+                     <td class="text-center" th:text="${order.user.username}"></td>
+                     <td class="text-center" th:text="${order.user.address.ReciverPhoneNumber}"></td>
+                     <td class="text-center" th:switch="${order.orderStatus}">
+                      <span th:case="'Chờ xét duyệt'" class="badge badge-warning rounded" th:text="${order.orderStatus}"></span>
+                       <span th:case="'Đang đóng gói'" class="badge badge-info rounded" th:text="${order.orderStatus}"></span>
+                        <span th:case="'Đang vận chuyển'" class="badge badge-secondary rounded" th:text="${order.orderStatus}"></span>
+                         <span th:case="'Hoàn thành'" class="badge badge-success rounded" th:text="${order.orderStatus}"></span>
+                          <span th:case="'Hủy đơn'" class="badge badge-danger rounded" th:text="${order.orderStatus}"></span>
+                      </td>
+                      <td class="text-center">
+                      
+                      	<a th:text="${order.Buyer_status != null} ? ${#numbers.formatDecimal(order.Buyer_status, 0, 'COMMA', 0, 'POINT')}+' ₫' : 'Chưa cọc tiền'"></a>
+                      	
+                      </td>
+                      <td class="text-center" th:text="${#dates.format(order.orderDate, 'dd-MMM-yyyy')}"></td>
+<!--                       <td class="text-center" th:text="${#dates.format(order.shippingDate, 'dd-MMM-yyyy')}"></td> -->
+                      <td class="text-right"><span th:text="${#numbers.formatDecimal((order.orderTotal), 0, 'COMMA', 0, 'POINT')}+' ₫'"></span></td>
+                    
+				</tr> 
+			</tbody>
+			<tfoot>
+
+			</tfoot>
+		</table>
+	</div>
+	 <div th:replace="common/header :: footer"> </div>
+	 <div th:replace="common/header :: body-scripts"> </div>
+	  <script src="/js/tagsinput-custom.js"></script>
+	  <script type="text/javascript">
+	  $(document).ready(function() {
+		  $('#table').DataTable({
+			  columnDefs: [
+				{ "width": "10%", "targets": 0 },	
+				{ "width": "10%", "targets": 2 },	
+				{ "width": "10%", "targets": 4 },
+				],
+				"ordering": false,
+			  	"bPaginate": true,
+			    "bLengthChange": true,
+			    "bFilter": true,
+			    "bInfo": true,
+			    "bAutoWidth": false
+		  });
+	  });
+	  </script>
+</body>
+</html>

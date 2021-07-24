@@ -1,4 +1,4 @@
-package com.fpoly.controller;
+package com.fpoly.controller.CRUD;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fpoly.model.Brand;
 import com.fpoly.model.Color;
@@ -60,37 +61,59 @@ public class BrandController {
 	}
 
 	@RequestMapping("/update/{id}")
-	public String updateBrand(@PathVariable int id, Model model) {
-
+	public String updateBrand(@PathVariable String id, Model model) {
+		System.out.println(id);
 		List<Product> product = productRepository.findAll();
 
 		model.addAttribute("product", product);
+		
+		List<Brand> brand = brandRepository.findByBrand(id);
 
-		Optional<Brand> brand = brandRepository.findById(id);
-
-		if (brand.isPresent()) {
-			model.addAttribute("brand", brand.get());
+		if (brand!=null) {
+			for (int i = 0; i < 1; i++) {
+				model.addAttribute("brand", brand.get(i));
+			}
+			
+			model.addAttribute("brandOld", id);
 		}
 
 		return "brand/update";
 	}
 
-	@PostMapping("/update")
-	public String doUpdatepSize(Model model, @ModelAttribute("Brand") Brand brand) {
+	@PostMapping("/update/{brandOld}")
+	public String doUpdatepSize(@PathVariable String brandOld,Model model, @ModelAttribute("Brand") Brand brand, RedirectAttributes attributes) {
 
+		List<Brand> brandOldlist = brandRepository.findByBrand(brandOld);
+		
+		List<Brand> brandTemp = brandRepository.findByBrand(brand.getName());
+		
+		if(brandTemp.isEmpty()) {
+			for (Brand brand2 : brandOldlist) {
+				brand2.setName(brand.getName());
+				System.out.println(brand.getName());
+				brandRepository.save(brand2);
+				attributes.addFlashAttribute("Valid", true);
+			}
+		}else {
+			attributes.addFlashAttribute("notValid", true);
+			return "redirect:/productDetail/getProductDetail";
+		}
+		
 		brandRepository.save(brand);
 
-		return "redirect:/brand/get";
+		return "redirect:/productDetail/getProductDetail";
 	}
 	
 	@RequestMapping("/delete/{id}")
-	public String deleteBrand(Model model , @PathVariable("id") Integer id ,  @ModelAttribute("Brand") Brand Brand) {
+	public String deleteBrand(Model model , @PathVariable("id") String id ,  @ModelAttribute("Brand") Brand Brand,RedirectAttributes attributes) {
 		
-		Brand color1 = brandRepository.getById(id);
-		
-		brandRepository.delete(color1);
-		
-		return "redirect:/brand/get";
+		List<Brand> brandTemp = brandRepository.findByBrand(id);
+		for (Brand brands : brandTemp) {
+			System.out.println(brandTemp);
+			brandRepository.delete(brands);
+		}
+		 attributes.addFlashAttribute("DeleteSuccess",true); 
+		return "redirect:/productDetail/getProductDetail";
 	}
 	
 }

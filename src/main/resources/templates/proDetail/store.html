@@ -152,7 +152,7 @@
                  	</div>
                   <a style="height: 40px" th:href="@{/article-detail?id=}+${article.IDProductDetail}" class="card-title" th:text="${article.title}"></a>
                   
-                  <div class="price"><span class="h5" th:text="${#numbers.formatDecimal(article.price, 0, T(Math).round(article.price) == article.price ? 0 : 2)}+' ₫'"> </span></div>
+                  <div class="price"><span class="" th:text="${#numbers.formatDecimal(article.price, 0, 'COMMA', 0, 'POINT')}"></span> ₫</div>
                 </div>              
               </div>
           </div>      

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org./1999/xhtml">
+<head th:replace="common/header :: common-header" />
+
+
+<body class="d-flex flex-column">
+  <div th:replace="common/header :: navbar"> </div>
+  <div style="margin-top:80px"></div>
+ 
+  <div class="container page-content">  
+   <h4 class="font-weight-bold text-center mb-4">Hóa đơn chi tiết</h4> 
+    <div class="row card p-2 pt-3 mb-2">
+      <div class="align-items-center col-12 col-sm-6 col-lg-4 mb-2 mb-2">
+        <h5 class="font-weight-bold"></h5>
+        <div class="list-group list-group-flush list-group-no-border list-group-sm">
+          <div><strong>Mã đơn hàng: </strong><strong th:text="'#ORD'+${order.IDCart}"></strong></div>
+          <div><strong>Ngày đặt hàng: </strong><span th:text="${#dates.format(order.orderDate, 'dd-MMM-yyyy')}"></span></div>
+          <div><strong>Ngày giao hàng (dự tính): </strong><span th:text="${#dates.format(order.shippingDate, 'dd-MMM-yyyy')}"></span></div>
+          <div><strong>Số tiền đã cọc: </strong><a th:text="${order.Buyer_status != null} ? ${#numbers.formatDecimal(order.Buyer_status, 0, 'COMMA', 0, 'POINT')}+' ₫' : '0'+' ₫'"></a>
+            </div>
+    
+          <div class="" th:switch="${order.orderStatus}">
+     	<strong>Trạng thái hiện tại: </strong>
+     		 <span th:case="'Chờ xét duyệt'" class="badge badge-warning rounded" th:text="${order.orderStatus}"></span>
+              <span th:case="'Đang đóng gói'" class="badge badge-info rounded" th:text="${order.orderStatus}"></span>
+               <span th:case="'Đang vận chuyển'" class="badge badge-secondary rounded" th:text="${order.orderStatus}"></span>
+                <span th:case="'Hoàn thành'" class="badge badge-success rounded" th:text="${order.orderStatus}"></span>
+                 <span th:case="'Hủy đơn'" class="badge badge-danger rounded" th:text="${order.orderStatus}"></span>
+     	</div>
+        </div>        
+      <!--   <hr class="d-block d-sm-none"> -->
+      
+      </div>
+    </div>
+    
+     <div class="row card p-2 pt-3 mb-2">
+      <div class="align-items-center col-12 col-sm-6 col-lg-4 mb-2">
+        <h5 class="font-weight-bold "></h5>
+         <div class="list-group list-group-flush list-group-no-border list-group-sm">
+         <div th:each="address : ${order.user}">
+         	<div><strong>Họ và tên người nhận: </strong><span th:text="${address.address.ReciverName}"></span></div>
+         	<div><strong>Số điện thoại: </strong><span th:text="${address.address.ReciverPhoneNumber}"></span></div>
+         	<div><strong>Địa chỉ: </strong><span th:text="${address.address.streetAddress}+', '+${address.address.city}"></span></div>
+         </div>
+        </div> 
+        <hr class="d-block d-sm-none">        
+      </div>
+    </div>
+
+       
+     <div class="row card">
+      <div class="card-body">
+        <div class="row align-items-center border-bottom py-2" th:each="cartItem : ${order.cartItem}">
+        
+          <div class="col-12 col-md-6 mb-2">
+            <div class="row align-items-center">
+        
+              <div class="col-4">
+             	 <div th:each="img : ${cartItem.productDetail.ProductImg}">
+               		 <a th:href="@{/article-detail?id=}+${cartItem.productDetail.IDProductDetail}"><img class="img-fluid" th:src="${img.picture1}"></a>
+                </div>
+              </div>
+              <div class="col-8">
+                <a th:href="@{/article-detail?id=}+${cartItem.productDetail.IDProductDetail}" class="h6 bold d-inline-block" th:text=${cartItem.productDetail.title}></a>
+                  <br>
+                  <div><small><b>Size</b>: <span th:text="${cartItem.size}"></span></small></div>                  
+                  <small><b>Giá</b>: <span th:text="${#numbers.formatDecimal(cartItem.productDetail.price, 0, 'COMMA', 0, 'POINT')+ ' ₫'}"></span></small>
+              </div>
+              
+            </div>
+          </div>  
+              
+          <div class="col-12 col-md-6 text-right">
+            <span>x<span th:text="${cartItem.qty}"></span> (sản phẩm) -  </span>                           
+            <span class="font-weight-bold text-info"><span th:id="'price'+${cartItem.IDCartItem}" th:text="${#numbers.formatDecimal(cartItem.subtotal, 0, 'COMMA', 0, 'POINT')+ ' ₫'}"></span></span>
+          </div>  
+              
+            
+                                     
+       </div>  
+       <div class="d-flex justify-content-center align-items-center mt-3 mb-2">
+         <div class="text-center m-3">           
+           <h5 class="counter">Tổng số</h5>
+           <h3 class="font-weight-bold"><span th:text="${#numbers.formatDecimal(order.orderTotal, 0, 'COMMA', 0, 'POINT')+ ' ₫'}"></span></h3>
+          </div>         
+       </div>
+       </div>
+    </div>    
+  </div> <!--  end container -->
+  
+  <div th:replace="common/header :: footer"> </div>
+  <div th:replace="common/header :: body-scripts"> </div>
+</body>
+</html>

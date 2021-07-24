@@ -17,4 +17,5 @@ public interface Cart_ItemRepository extends JpaRepository<Cart_Item, Integer> {
 	void deleteAllByUserAndCartIsNull(com.fpoly.model.User user);
 
 	int countDistinctByUserAndCartIsNull(com.fpoly.model.User user);
+
 }

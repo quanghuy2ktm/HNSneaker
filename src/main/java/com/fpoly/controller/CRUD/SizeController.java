@@ -1,4 +1,4 @@
-package com.fpoly.controller;
+package com.fpoly.controller.CRUD;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
 import com.fpoly.model.Product_Detail;
@@ -58,10 +59,14 @@ public class SizeController {
 	@RequestMapping("/update/{id}")
 	public String updateSize(@PathVariable int id, Model model) {
 		
-		Optional<Size> size = sizeRepository.findById(id);
-
-		if (size.isPresent()) {
-			model.addAttribute("size", size.get());
+		List<Size> size = sizeRepository.findByValue(id);
+		if (size!=null) {
+			
+			for (int i = 0; i < 1; i++) {
+				model.addAttribute("size", size.get(i));
+				System.out.println(size.get(i));
+			}
+			model.addAttribute("sizeOld", id);
 		}
 
 		List<Product_Detail> productDetail = product_DetailRepository.findAll();
@@ -71,24 +76,43 @@ public class SizeController {
 		return "size/update";
 	}
 
-	@PostMapping("/update")
-	public String doUpdatepSize(Model model, @ModelAttribute("Size") Size size) {
+	@PostMapping("/update/{id}")
+	public String doUpdatepSize(@PathVariable int id,Model model, @ModelAttribute("Size") Size size ,RedirectAttributes attributes) {
 
-		sizeRepository.save(size);
+		List<Size> sizeTemp = sizeRepository.findByValue(Integer.parseInt(size.getValue()));
+
+		List<Size> sizeOld = sizeRepository.findByValue(id);
+		
+		if(sizeTemp.isEmpty()) {
+			
+			for (Size size2 : sizeOld) {
+				size2.setValue(size.getValue());
+				System.out.println(size.getValue());
+				sizeRepository.save(size2);
+				attributes.addFlashAttribute("Valid", true);
+			}
+			
+		}else {
+			attributes.addFlashAttribute("notValid", true);
+			return "redirect:/productDetail/getProductDetail";
+		}
 
 		// List<Address> addressList = addressRepos.findAll();
 
-		return "redirect:/size/get";
+		return "redirect:/productDetail/getProductDetail";
 
 	}
 	@RequestMapping("/delete/{id}")
-	public String deleteSize(Model model , @PathVariable("id") Integer id ,  @ModelAttribute("Size") Size size) {
+	public String deleteSize(Model model , @PathVariable("id") Integer id ,  @ModelAttribute("Size") Size size ,RedirectAttributes attributes) {
 		
-		Size size1 = sizeRepository.getById(id);
+		List<Size> size1 = sizeRepository.findByValue(id);
+		for (Size size2 : size1) {
+			System.out.println(size1);
+			sizeRepository.delete(size2);
+		}
+		attributes.addFlashAttribute("DeleteSuccess", true);
 		
-		sizeRepository.delete(size1);
-		
-		return "redirect:/size/get";
+		return "redirect:/productDetail/getProductDetail";
 	}
 	
 }

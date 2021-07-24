@@ -1,6 +1,7 @@
 package com.fpoly.controller;
 
 import java.nio.charset.Charset;
+import java.security.Principal;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.fpoly.model.ShoppingCart;
 import com.fpoly.model.User;
 import com.fpoly.service.OrderService;
 import com.fpoly.service.ShoppingCartService;
+import com.fpoly.service.UserService;
 
 
 @Controller
@@ -30,11 +32,15 @@ public class CheckoutControler {
 	@Autowired
 	private OrderService orderService;
 
+	@Autowired
+	private UserService userService;
+	
 	@RequestMapping("/checkout")
-	public String checkout( @RequestParam(value="missingRequiredField", required=false) boolean missingRequiredField, Model model, Authentication authentication) {		
+	public String checkout( @RequestParam(value="missingRequiredField", required=false) boolean missingRequiredField, Model model, Authentication authentication, Principal principal, RedirectAttributes attr) {		
 		User user = (User) authentication.getPrincipal();	
 		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(user);
 		if(shoppingCart.isEmpty()) {
+			attr.addFlashAttribute("alert", true);
 			model.addAttribute("emptyCart", true);
 			return "redirect:/shopping-cart/cart";
 		}
@@ -52,7 +58,12 @@ public class CheckoutControler {
 	    String generatedString = buffer.toString();
 
 	    System.out.println(generatedString);
-		model.addAttribute("shipmentCode", generatedString);
+		model.addAttribute("shipmentCode", generatedString.toUpperCase());
+		
+		//Thông tin, địa chỉ giao hàng
+		User userAddress = userService.findByUsername(principal.getName());
+		System.out.println(userAddress);
+		model.addAttribute("user", userAddress);
 		
 		model.addAttribute("cartItemList", shoppingCart.getCartItems());
 		model.addAttribute("shoppingCart", shoppingCart);
@@ -63,13 +74,15 @@ public class CheckoutControler {
 	}
 	
 	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
-	public String placeOrder(@ModelAttribute("address") Address address, RedirectAttributes redirectAttributes, Authentication authentication) {		
+	public String placeOrder(@ModelAttribute("address") Address address, RedirectAttributes redirectAttributes, Authentication authentication,Model model) {		
 		User user = (User) authentication.getPrincipal();		
+		
 		ShoppingCart shoppingCart = shoppingCartService.getShoppingCart(user);	
 		if (!shoppingCart.isEmpty()) {
-//			shipping.setAddress(address);
 			Cart order = orderService.createOrder(shoppingCart, user);		
 			redirectAttributes.addFlashAttribute("order", order);
+		}else {
+			redirectAttributes.addFlashAttribute("missingRequiredField", true);
 		}
 		return "redirect:/order-submitted";
 	}

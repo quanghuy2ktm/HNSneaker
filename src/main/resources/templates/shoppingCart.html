@@ -7,7 +7,22 @@
 
   <div th:replace="common/header :: navbar"> </div>
  <div style="margin-top: 100px"></div>
-  <div class="container page-content">       
+  <div class="container page-content">
+  
+	      <div th:if="${notEnoughStock}" class="alert alert-danger alert-dismissible fade show" role="alert">
+	      <strong><i class="fas fa-exclamation-circle"></i> Không thể thêm vào giỏ hàng, không đủ sản phẩm trong kho.</strong>
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>       
+	    
+	    <div th:if="${alert}" class="alert alert-danger alert-dismissible fade show" role="alert">
+	      <strong><i class="fas fa-exclamation-circle"></i> Giỏ hàng của bạn trống, xin mời mua thêm sản phẩm trước khi thanh toán</strong>
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>      
+	    
     <form th:action="@{/shopping-cart/update-item}" method="post">   
     <input hidden="hidden" id="newqty" th:name="qty">    
     <input hidden="hidden" id="newid" th:name="id">     
@@ -56,11 +71,14 @@
            </div> 
          </div>
          <div class="text-center mt-3">
-            <div th:if="${#lists.isEmpty(cartItemList)}"><a style="color: red">Giỏ hàng này cô đơn như cuộc đời bạn vậy!</a></div>
+            <div th:if="${#lists.isEmpty(cartItemList)}">
+            	<img style="width: 220px" th:src="@{~/image/article/Untitled.png}"><br>
+            	 <a style="color: red"><i class="fas fa-exclamation-circle"></i> Giỏ hàng này còn trống</a>
+            	</div>
             <small class="counter">TỔNG TIỀN</small>
             <h3 class="font-weight-bold"><span th:text="${#numbers.formatDecimal(shoppingCart.getGrandTotal(), 0, 'COMMA', 0, 'POINT')}"></span> ₫</h3>
-            <a th:href="@{/store}" class="btn btn-info rounded-pill "><i data-feather="arrow-left"></i> Back to shop</a>            
-            <a th:href="@{/checkout}" class="btn btn-primary rounded-pill">Checkout <i data-feather="arrow-right"></i></a>
+            <a th:href="@{/store}" class="btn btn-info rounded-pill "><i data-feather="arrow-left"></i> Mua thêm sản phẩm</a>            
+            <a th:href="@{/checkout}" class="btn btn-primary rounded-pill">Thanh toán <i data-feather="arrow-right"></i></a>
         </div>
       </div>
     </div>

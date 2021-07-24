@@ -1,43 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head th:replace="common/header :: common-header" />
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-	crossorigin="anonymous" />
+ <script type="text/javascript">
 
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
-
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
-</head>
+</script> 
 <body>
-	<div th:each="list:${category}">
-		<h1>Category form</h1>
-		<form th:action="@{/category/update}" method="POST">
-			
+	<div th:replace="adminHome :: navbarAdmin"> </div>
+	
+	 <div style="margin-top: 100px"></div>
+	 
+	<div class="container mt-2" style="padding: 6px; padding-bottom: 300px"> 
+		<div th:if="${notValid}" class="alert alert-danger alert-dismissible fade show" role="alert">
+	      <strong>Chỉnh sửa thất bại, đã có giá trị này!</strong>
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	<div class="card p-2" th:each="list : ${category}">
+		<h2>Cập nhật thể loại</h2><hr>
+		<form th:action="@{/category/update}"  method="post" >
+				
+				Tên thể loại
 				<input type="text" name="IDCategory" th:value="*{list.IDCategory}" hidden="true">
 			
 				<input type="text" name="categoryName" placeholder="Tên danh mục" th:value="*{list.categoryName}">
 				
-				 	<label>Trạng thái danh mục sản phẩm</label>
 				 	
-				<select style="width: 200px" name="categoryStatus">
+				<select style="width: 200px" name="categoryStatus" hidden="true">
 				 	<option th:value="*{list.categoryStatus}" th:text="*{list.categoryStatus}?'Tạm khóa':'Đang mở'"></option>
     				<option th:value="0" >Đang mở</option>
     				<option th:value="1" >Tạm khóa</option>
 				</select>
 			
-			<button>Submit</button>
+			<button class="btn btn-primary"><i class="fa fa-edit"></i></button>
 		</form>
 	</div>
+	</div>
+	<div th:replace="common/header :: footer"> </div>
+	 <div th:replace="common/header :: body-scripts"> </div>
 </body>
 </html>

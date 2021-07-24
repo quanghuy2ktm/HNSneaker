@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org./1999/xhtml">
+<head th:replace="common/header :: common-header" />
+
+
+<body class="d-flex flex-column">
+  <div th:replace="common/header :: navbar"> </div>
+  <div style="margin-top: 100px"></div>
+  <div class="container page-content">
+    <div class="row">    
+      <div class="col-md-4 col-lg-3">
+        <div class="card">
+         <div class="card-body text-center">
+            <img src="/image/user/user.png" width="100" height="100" alt="User" class="rounded-circle mb-3"><br>
+          <i class="fa fa-dot-circle" style="color:green"></i> <a class="bold mb-0" th:text="${#strings.capitalize(user.username)}"></a><br>
+         <small class="text-primary" th:text="'Lần cuối đăng nhập '+${#dates.format(#dates.createNow(), ' dd MMM, yyyy hh:mm')}"></small>       
+          </div>
+          <div class="list-group list-group-flush">
+            <a th:href="@{/my-profile}" class="list-group-item list-group-item-action active"><i data-feather="user" class="mr-3"></i> Thông tin cá nhân</a>
+            <a th:href="@{/my-orders}" class="list-group-item list-group-item-action "><i data-feather="shopping-bag" class="mr-3"></i> Đơn hàng</a>
+            <a th:href="@{/my-address}" class="list-group-item list-group-item-action"><i data-feather="map" class="mr-3"></i> Địa chỉ</a>
+            <a th:href="@{/logout}" class="list-group-item list-group-item-action text-danger"><i data-feather="log-out" class="mr-3"></i> Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+      
+       <div class="col mt-3 mt-md-0">
+          <div th:if="${updateSuccess}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Thông tin của bạn đã được cập nhật!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div th:if="${incorrectPassword}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Mật khẩu của bạn không đúng</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+              
+          <div class="card">
+            <div class="card-body">
+              <h3>Thông tin của tôi</h3><hr>
+              <form id="profileForm" th:action="@{/update-user-info}" novalidate method="post">
+                <div class="form-row">
+                  <div class="form-group col-sm-6">
+                    <label for="firstName">Họ</label>                        
+                    <input type="text" class="form-control" 
+                                id="firstName" name="firstName" th:value="${user.firstName}">                   
+                  </div>                  
+                  <div class="form-group col-sm-6">
+                    <label for="lastName">Tên</label>                        
+                    <input type="text" class="form-control" 
+                                id="lastName" name="lastName" th:value="${user.lastName}">
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label for="userName">Tên đăng nhập</label>
+                    <input required="required" type="text" class="form-control" th:classappend="${usernameExists} ? is-invalid"
+                                id="userName" name="username" th:value="${user.username}">
+                    <div class="invalid-feedback">Tên người dùng này đã được sử dụng, hãy dùng tên khác</div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label for="email">Email</label>
+                    <input required="required" type="text" class="form-control" th:classappend="${emailExists} ? is-invalid"
+                                id="email" name="email" th:value="${user.email}">
+                    <div class="invalid-feedback">Email người dùng này đã được sử dụng, hãy dùng Email khác</div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <label for="txtNewPassword">Mật khẩu mới</label>
+                    <input type="password" class="form-control" name="new-password">
+                  </div>
+                <!--   <div class="form-group col-sm-6">                
+                    <label for="txtConfirmPassword">Confirm password</label>
+                    <input type="text" class="form-control" th:value="${user.userRoles.RoleName}">                             
+                  </div>  -->
+                  <div class="form-group col-12">                
+                    <button id="updateUserInfoButton" type="button" class="btn btn-primary">Cập nhật</button> 
+                  <!--   <button id="updateUserInfoButton" type="submit" class="btn btn-primary">Cập nhật</button> -->
+                  </div>
+                </div>
+                
+                <!--  password check modal -->
+                 <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Hãy nhập mật khẩu hiện tại của bạn</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                         <input type="password" class="form-control" id="password" name="password">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>   
+                <!--  /password check modal -->                
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+  </div> <!--  end container -->
+  
+  <div th:replace="common/header :: footer"> </div>   
+  <div th:replace="common/header :: body-scripts"> </div>
+  
+  <script>
+  	function checkPasswordMatch() {
+		var password = $("#txtNewPassword").val();
+		var confirmPassword = $("#txtConfirmPassword").val();
+		if (password == "" && confirmPassword == "") {
+			$("#updateUserInfoButton").attr("disabled", false);
+		} else {
+			if (password != confirmPassword) {
+				$("#updateUserInfoButton").attr("disabled", true);				
+				$("#txtConfirmPassword").addClass("is-invalid");
+			} else {
+				$("#updateUserInfoButton").attr("disabled", false);
+				$("#txtConfirmPassword").removeClass("is-invalid");
+			}
+		}		
+	}
+    
+  	$(document).ready(function(){
+  		$("#txtConfirmPassword").keyup(checkPasswordMatch);
+  		$("#txtNewPassword").keyup(checkPasswordMatch);
+    	$('#updateUserInfoButton').click(function() {
+    		console.log("clickeo")
+    		if ($('#txtNewPassword').val() == '') {   
+    			$('#profileForm').submit()    		
+    		} else {
+    			$('#passwordModal').modal('show');
+    		}
+    	 });
+    });
+  	
+
+
+  </script>
+</body>
+</html>

@@ -42,7 +42,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	public Cart_Item addArticleToShoppingCart(Product_Detail article, User user, int qty, String size) {
 		
 		ShoppingCart shoppingCart = this.getShoppingCart(user);
-		System.out.println("adadad: "+ shoppingCart.getGrandTotal());
+		System.out.println("total: "+ shoppingCart.getGrandTotal());
 		System.out.println(article);
 		Cart_Item cartItem = shoppingCart.findCartItemByArticleAndSize(article.getIDProductDetail(), size);
 		

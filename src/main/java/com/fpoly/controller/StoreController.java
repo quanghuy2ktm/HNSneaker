@@ -8,6 +8,7 @@ import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -50,7 +51,8 @@ public class StoreController {
 	CategoryRepository categoryRepo;
 	
 	@RequestMapping("store")
-	public String store(@ModelAttribute("filters") ArticleFilterForm filters, Model model) {
+	public String store(@ModelAttribute("filters") ArticleFilterForm filters, Model model, Authentication aut) {
+		
 		Integer page = filters.getPage();			
 		
 		int pagenumber = (page == null ||  page <= 0) ? 0 : page-1;
@@ -85,7 +87,7 @@ public class StoreController {
 	}
 	
 	@RequestMapping("/article-detail")
-	public String articleDetail(@PathParam("id") Integer id, Model model) {
+	public String articleDetail(@PathParam("id") Integer id, Model model, Authentication aut) {
 		Product_Detail article = pdrepos.findByIdp(id);
 		model.addAttribute("article", article);
 		model.addAttribute("notEnoughStock", model.asMap().get("notEnoughStock"));

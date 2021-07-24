@@ -12,7 +12,7 @@ import com.fpoly.model.Size;
 public interface SizeRepository extends JpaRepository<Size, Integer> {
 	
 	@Query(value = "select * from Size where value=?1", nativeQuery = true)
-	public Size findByValue(String sizeName);
+	public List<Size> findByValue(int id);
 	
 	@Query("SELECT DISTINCT s.value FROM Size s order by s.value")
 	List<String> findAllSizes();

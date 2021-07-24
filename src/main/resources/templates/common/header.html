@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.w3.org./1999/xhtml" xmlns:sec="http://www.w3.org./1999/xhtml">
 <head th:fragment="common-header">
-  <meta charset="utf-8">
+  <meta content="text/html;charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   
@@ -13,6 +13,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
 	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
 	crossorigin="anonymous" />
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <!-- Bootstrap core CSS -->
   <link href="/css/bootstrap.min.css" rel="stylesheet">  
   <!-- Tables plugin -->
@@ -20,7 +21,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <!-- Bootstrap tagsinput -->
-  <link href="/css/tagsinput.css" rel="stylesheet">  
+  <link href="/css/tagsinput.css" rel="stylesheet"> 
+  
+   
   <!-- Simple pagination -->
   <link href="/css/simplePagination.css" rel="stylesheet" />  
   <!-- Slick carousel -->  
@@ -45,31 +48,43 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto font-weight-bold">
-           <li class="nav-item">
-            <a class="nav-link" th:href="@{/store}"> Trang chủ</a>
-          </li>
-         <!-- <li class="nav-item">
-            <a class="nav-link" th:href="@{/store}"> Store </a>
-          </li> -->
-<!--          <li class="nav-item">          
-            <a class="nav-link" th:href="@{/shopping-cart/cart}">Shopping Cart 
+        
+         <!--  <li class="nav-item">
+            <a class="nav-link" th:href="@{/store}"> <i style="font-size: 27px" class="bi bi-house-fill"></i> </a>
+          </li>  -->
+          
+ 	 	  <li class="nav-item">          
+            <a class="nav-link" th:href="@{/shopping-cart/cart}"><i style="font-size: 25px" class="fas fa-shopping-cart"></i>
             <span class="badge badge-primary badge-pill" style="vertical-align: top;" th:text="${shoppingCartItemNumber} > 0 ? ${shoppingCartItemNumber}"></span></a>
-          </li>    -->                    
+          </li>                     
         </ul>
+        
         <ul class="navbar-nav ml-auto font-weight-bold">          
           <li class="nav-item">          
             <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}">Login </a>
           </li>
-          <li class="nav-item">           
+<!--           <li class="nav-item">           
             <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/my-profile}">Tài khoản</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}"> Đăng xuất </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" sec:authorize="hasRole('ADMIN')" th:href="@{admin}"> ADMIN PORTAL</a>
-          </li>
+          </li> -->
+<!--           <li class="nav-item">
+            <a class="nav-link text-dark p-3 mr-2" sec:authorize="hasRole('ADMIN')" th:href="@{admin}"><i class="fas fa-user-secret"></i> ADMIN</a>
+          </li> -->
         </ul>
+     	
+     	<div class="btn-group dropleft" sec:authorize="isAuthenticated()">
+		  <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <i style="font-size: 20px" class="fas fa-user-circle"></i> <a sec:authentication="name"></a>
+		  </button>
+		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		   	<a class="dropdown-item mt-2" th:href="@{/store}"> <i class="fa fa-home"></i> Trang chủ </a>
+		    <a class="dropdown-item " th:href="@{/my-profile}"><i class="fas fa-user-cog"></i> Tài khoản</a>
+		    <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" th:href="@{admin}"><i class="fas fa-user-secret"></i> Dashboard</a>
+		    <a class="dropdown-item text-danger" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> <strong>Đăng xuất</strong> </a>
+		 </div>
+		</div>
       </div>
     </nav>
     
@@ -150,8 +165,16 @@
           .text("Please Wait...")
           .attr('disabled', 'disabled');
         return true;#f1f1f1
-      });
+      }); 
+      
+      $(function () {
+    	  $('[data-toggle="tooltip"]').tooltip()
+    	})
+    	
+      
     });
+    
+    
     </script>
   
   </div>

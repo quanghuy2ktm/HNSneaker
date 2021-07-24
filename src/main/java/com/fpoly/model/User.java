@@ -85,7 +85,12 @@ public class User implements UserDetails{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-		
+	
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -145,10 +150,6 @@ public class User implements UserDetails{
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public void setPassWord(String passWord) {
-		this.password = passWord;
 	}
 
 	public String getPhoneNumber() {

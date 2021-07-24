@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org./1999/xhtml">
+<head th:replace="common/header :: common-header" />
+
+
+<body class="d-flex flex-column">
+  <div th:replace="common/header :: navbar"> </div>
+<div style="margin-top: 100px"></div>
+  <div class="container page-content">
+    <div class="row">
+      
+       <div class="col-md-4 col-lg-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <img src="/image/user/user.png" width="100" height="100" alt="User" class="rounded-circle mb-3"><br>
+          <i class="fa fa-dot-circle" style="color:green"></i> <a class="bold mb-0" th:text="${#strings.capitalize(user.username)}"></a><br>
+         <small class="text-primary" th:text="'Lần cuối đăng nhập '+${#dates.format(#dates.createNow(), ' dd MMM, yyyy hh:mm')}"></small>       
+          </div>
+          <div class="list-group list-group-flush">
+            <a th:href="@{/my-profile}" class="list-group-item list-group-item-action"><i data-feather="user" class="mr-3"></i> Thông tin cá nhân</a>
+            <a th:href="@{/my-orders}" class="list-group-item list-group-item-action "><i data-feather="shopping-bag" class="mr-3"></i> Đơn hàng</a>
+            <a th:href="@{/my-address}" class="list-group-item list-group-item-action active"><i data-feather="map" class="mr-3"></i> Địa chỉ</a>
+            <a th:href="@{/logout}" class="list-group-item list-group-item-action text-danger"><i data-feather="log-out" class="mr-3"></i> Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+      
+       <div class="col mt-3 mt-md-0">
+          <div class="card">
+            <div class="card-body">
+              <h3>Địa chỉ giao hàng</h3><hr>
+              <form th:action="@{/update-user-address}" method="post">
+                <div class="form-row">
+                <div class="form-group col-12">
+                    <label for="billingAddress">Họ và tên người nhận</label>
+                     <input type="text" class="form-control" th:name="IDAdress" th:value="${user?.address?.IDAdress}" hidden="true">
+                    <input type="text" class="form-control" id="ReciverName" th:name="ReciverName" th:value="${user?.address?.ReciverName}">
+                  </div>
+                  
+                  <div class="form-group col-12">
+                    <label for="billingAddress">Địa chỉ nhà</label>
+                    <input type="text" class="form-control" id="streetAddress" th:name="streetAddress" th:value="${user?.address?.streetAddress}">
+                  </div>
+                  
+                    <div class="form-group col-6 col-sm-5">
+                    <label for="billingCity">Thành phố</label>
+                    <input type="text" class="form-control" id="city"  th:name="city" th:value="${user?.address?.city}">
+                  </div>
+                  
+                  <div class="form-group col-6 col-sm-5">
+                    <label for="billingCountry">Số điện thoại</label>
+                    <input type="text" class="form-control" id="ReciverPhoneNumber" th:name="ReciverPhoneNumber" th:value="${user?.address?.ReciverPhoneNumber}">
+                    
+                  </div>
+                
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">Cập nhật</button>
+                </div>
+              </form>
+             
+            </div>
+          </div>
+        </div>
+        
+    </div>
+  </div> <!--  end container -->
+  
+  <div th:replace="common/header :: footer"> </div>
+  
+  
+  <div th:replace="common/header :: body-scripts"> </div>
+</body>
+</html>

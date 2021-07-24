@@ -33,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/new-user",
 			"/login",
 			"/store",
-			"/article-detail"				
+			"/article-detail",
+			"/shopping-cart/**",
 	};
 	
     @Override
@@ -56,16 +57,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
-			.antMatchers("/article/**").hasRole("ADMIN")
+			.antMatchers("/admin/**").hasRole("ADMIN")
 			.anyRequest().authenticated();
 		
 		http
 			.csrf().disable().cors().disable()
 			.formLogin().failureUrl("/login?error")
-			.loginPage("/login").permitAll()
+			.loginPage("/login").permitAll().defaultSuccessUrl("/store")
 			.and()
 			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/?logout").deleteCookies("remember-me").permitAll()
+			.logoutSuccessUrl("/store").deleteCookies("remember-me").permitAll()
 			.and()
 			.rememberMe().key("aSecretKey");
 	}

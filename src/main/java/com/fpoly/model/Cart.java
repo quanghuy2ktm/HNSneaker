@@ -2,6 +2,7 @@ package com.fpoly.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,12 +38,23 @@ public class Cart {
 	@Column(name = "Buyer_status")
 	private String Buyer_status;
 	
+	@OneToMany(mappedBy = "cart")
+	private Set<Cart_Item> cartItem;
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 	
 	public Cart () {
 		
+	}
+	
+	public Set<Cart_Item> getCartItem() {
+		return cartItem;
+	}
+
+	public void setCartItem(Set<Cart_Item> cartItem) {
+		this.cartItem = cartItem;
 	}
 
 	public Integer getIDCart() {

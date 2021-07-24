@@ -3,64 +3,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <head th:replace="common/header :: common-header" />
 
-<!-- <script type="text/javascript">
+ <script type="text/javascript">
 
-$(document).ready(function() {
-	
-	  var table = $('#table').DataTable({
-	    columnDefs: [
-	    { "width": "20%", "targets": 1 },	
-	    { "width": "5%", "targets": 8 },
-	    {
-	      targets: [0,2,6,10,11,12],
-	      createdCell: function(cell) {
-	        var $cell = $(cell);
-
-
-	        $(cell).contents().wrapAll("<div class='content'></div>");
-	        var $content = $cell.find(".content");
-
-	        $(cell).append($("<a style='color:black' href='#table' class='badge badge-light'>...</a>"));
-	        $btn = $(cell).find("a");
-
-	        $content.css({
-	          "height": "50px",
-	          "overflow": "hidden"
-	        })
-	        $cell.data("isLess", true);
-
-	        $btn.click(function() {
-	          var isLess = $cell.data("isLess");
-	          $content.css("height", isLess ? "auto" : "50px")
-	          $(this).text(isLess ? "Rút gọn" : "...")
-	          $cell.data("isLess", !isLess)
-	        })
-	      }
-	    
-	    
-	    }]
-	  });
-	  
-	  
-	 /*  $('#price').on('input', function(e){        
-		    $(this).val(formatCurrency(this.value.replace(/[, đ]/g,'')));
-		}).on('keypress',function(e){
-		    if(!$.isNumeric(String.fromCharCode(e.which))) e.preventDefault();
-		}).on('paste', function(e){    
-		    var cb = e.originalEvent.clipboardData || window.clipboardData;      
-		    if(!$.isNumeric(cb.getData('text'))) e.preventDefault();
-		});
-		function formatCurrency(number){
-		    var n = number.split('').reverse().join("");
-		    var n2 = n.replace(/\d\d\d(?!$)/g, "$&,");    
-		    return  n2.split('').reverse().join('') + ' đ';
-		} */
-	  
-	  
-	  
-	});
-
-</script> -->
+</script> 
 <body>
 
 	<div th:replace="adminHome :: navbarAdmin"> </div>
@@ -77,6 +22,27 @@ $(document).ready(function() {
      			<h1>Thêm sản phẩm</h1>
     		</div>
     		
+    	<div th:if="${notValid}" class="alert alert-danger alert-dismissible fade show" role="alert">
+	      <strong>Chỉnh sửa thất bại, đã có giá trị này!</strong>
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	    
+	    <div th:if="${Valid}" class="alert alert-success alert-dismissible fade show" role="alert">
+	      <strong>Chỉnh sửa thành công!</strong>
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>       
+	    
+	     <div th:if="${DeleteSuccess}" class="alert alert-warning alert-dismissible fade show" role="alert">
+	      <strong>Xóa thành công!</strong>
+	      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>   
+	    
    			 <div class="form-group">
      			 <input type="text" name="title" class="form-control" placeholder="Tên sản phẩm">
     		</div>
@@ -124,6 +90,56 @@ $(document).ready(function() {
          	</div> &nbsp;&nbsp;
           	 <div class="form-group">
             <button type="button" id="btn-size" class="btn btn-light badge badge-pill badge-dark p-2 mt-2 btn-size"  th:each="item : ${sizeList}" th:text="${item}"></button>           
+         	<!-- Modal SIZE -->
+         	<button type="button" class="btn btn-light badge badge-pill badge-primary p-2 mt-2 btn-size" data-toggle="modal" data-target="#exampleModalCenter">
+				  <i class="fas fa-edit"></i>
+			</button>
+         	<!-- Modal -->
+				<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLongTitle">Chỉnh sửa kích cỡ</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <!-- Size Table -->
+				        
+								<table id="table1" class="display table table-striped dt-responsive">
+									<thead class="bg-primary">
+										<tr>
+											<th style="color: white">Size</th>
+											<th style="color: white">Chức năng</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item : ${sizeList}">
+										
+											 <td th:text="${item}"></td>
+										    <td>
+										    <a class="btn btn-primary" th:href="@{/size/update/{id}(id=${item})}"> <i class="fas fa-edit"></i></a>
+										    <a class="btn btn-danger" th:href="@{/size/delete/{id}(id=${item})}">  <i class="fas fa-trash"></i></a>
+										   </td>
+										</tr> 
+									</tbody>
+									<tfoot>
+						
+									</tfoot>
+								</table>
+					
+					 <!-- Size Table end-->
+					 
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+				        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			<!-- Modal end -->	
           </div>        
         </div>
   			
@@ -133,6 +149,58 @@ $(document).ready(function() {
          	 </div>&nbsp;&nbsp;
           	 <div class="form-group">
             <button type="button" class="btn btn-light badge badge-pill badge-dark p-2 mt-2 btn-category" th:each="item : ${categoryList}"><span th:text="${item}"></span></button>           
+          	
+          	<!-- Modal Category -->
+         	<button type="button" class="btn btn-light badge badge-pill badge-primary p-2 mt-2 btn-size" data-toggle="modal" data-target="#exampleModalCenter1">
+				  <i class="fas fa-edit"></i>
+			</button>
+			
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLongTitle">Chỉnh sửa thể loại</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <!-- Size Table -->
+				        
+								<table id="table2" class="display table table-striped dt-responsive">
+									<thead class="bg-primary">
+										<tr>
+											<th style="color: white">Thể loại</th>
+											<th style="color: white">Chức năng</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item : ${categoryList}">
+										
+											 <td th:text="${item}"></td>
+										    <td>
+										    <a class="btn btn-primary" th:href="@{/category/update/{id}(id=${item})}"> <i class="fas fa-edit"></i></a>
+										    <a class="btn btn-danger" th:href="@{/category/delete/{id}(id=${item})}">  <i class="fas fa-trash"></i></a>
+										   </td>
+										</tr> 
+									</tbody>
+									<tfoot>
+						
+									</tfoot>
+								</table>
+					
+					 <!-- Category Table end-->
+					 
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+				        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				
           </div>        
         </div>
         
@@ -142,6 +210,58 @@ $(document).ready(function() {
          	 </div>&nbsp;&nbsp;
           	 <div class="form-group">
             <button type="button" id="btn-color" class="btn btn-light badge badge-pill badge-dark p-2 mt-2 btn-color" th:each="item : ${colorList}"><span th:text="${item}"></span></button>           
+         		
+         		<!-- Modal Color -->
+         	<button type="button" class="btn btn-light badge badge-pill badge-primary p-2 mt-2 btn-size" data-toggle="modal" data-target="#exampleModalCenter3">
+				  <i class="fas fa-edit"></i>
+			</button>
+			
+						<!-- Modal -->
+			<div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLongTitle">Chỉnh sửa màu sắc</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <!-- Size Table -->
+				        
+								<table id="table3" class="display table table-striped dt-responsive">
+									<thead class="bg-primary">
+										<tr>
+											<th style="color: white">Màu sắc</th>
+											<th style="color: white">Chức năng</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item : ${colorList}">
+										
+											 <td th:text="${item}"></td>
+										    <td>
+										    <a class="btn btn-primary" th:href="@{/color/update/{id}(id=${item})}"> <i class="fas fa-edit"></i></a>
+										    <a class="btn btn-danger" th:href="@{/color/delete/{id}(id=${item})}">  <i class="fas fa-trash"></i></a>
+										   </td>
+										</tr> 
+									</tbody>
+									<tfoot>
+						
+									</tfoot>
+								</table>
+					
+					 <!-- Category Table end-->
+					 
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+				        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			
           </div>        
         </div>
         
@@ -150,7 +270,59 @@ $(document).ready(function() {
             <input type="text" class="form-control" id="brands" name="brands" data-role="tagsinput" placeholder="Nhãn hiệu">
          	 </div>&nbsp;&nbsp;
           	 <div class="form-group">
-            <button type="button" class="btn btn-light badge badge-pill badge-dark p-2 mt-2 btn-brand" th:each="item : ${brandList}" th:text="${item}"></button>           
+            <button type="button" class="btn btn-light badge badge-pill badge-dark p-2 mt-2 btn-brand" th:each="item : ${brandList}" th:text="${item}"></button>   
+            
+            	<!-- Modal Brand -->
+         	<button type="button" class="btn btn-light badge badge-pill badge-primary p-2 mt-2 btn-size" data-toggle="modal" data-target="#exampleModalCenter2">
+				  <i class="fas fa-edit"></i>
+			</button>
+		
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLongTitle">Chỉnh sửa nhãn hiệu</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <!-- Size Table -->
+				        
+								<table id="table3" class="display table table-striped dt-responsive">
+									<thead class="bg-primary">
+										<tr>
+											<th style="color: white">Nhãn hiệu</th>
+											<th style="color: white">Chức năng</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item : ${brandList}">
+										
+											 <td th:text="${item}"></td>
+										    <td>
+										    <a class="btn btn-primary" th:href="@{/brand/update/{id}(id=${item})}"> <i class="fas fa-edit"></i></a>
+										    <a class="btn btn-danger" th:href="@{/brand/delete/{id}(id=${item})}">  <i class="fas fa-trash"></i></a>
+										   </td>
+										</tr> 
+									</tbody>
+									<tfoot>
+						
+									</tfoot>
+								</table>
+					
+					 <!-- Category Table end-->
+					 
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+				        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				
           </div>        
         </div>
         
@@ -207,5 +379,36 @@ $(document).ready(function() {
 			</tfoot>
 		</table>
 	</div> -->
+	  <div th:replace="common/header :: footer"> </div>
+	 <div th:replace="common/header :: body-scripts"> </div>
+	  <script src="/js/tagsinput-custom.js"></script>
+	  <script type="text/javascript">
+	  $(document).ready( function () {
+		    $('#table1').DataTable({
+		    	pageLength : 5,
+		    	 "bPaginate": true,
+		    	  "bLengthChange": false,
+		    	  "bFilter": true,
+		    	  "bInfo": false,
+		    	  "bAutoWidth": false
+		    });
+		    $('#table2').DataTable({
+		    	pageLength : 5,
+		    	 "bPaginate": true,
+		    	  "bLengthChange": false,
+		    	  "bFilter": true,
+		    	  "bInfo": false,
+		    	  "bAutoWidth": false
+		    });
+		    $('#table3').DataTable({
+		    	pageLength : 5,
+		    	 "bPaginate": true,
+		    	  "bLengthChange": false,
+		    	  "bFilter": true,
+		    	  "bInfo": false,
+		    	  "bAutoWidth": false
+		    });
+		} );
+	  </script>
 </body>
 </html>

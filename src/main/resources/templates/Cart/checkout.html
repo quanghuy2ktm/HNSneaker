@@ -9,20 +9,23 @@
  
   <div class="container page-content">   
     <form th:action="@{/checkout}" method="post">
-      <div class="row">      
-
+      <div class="row">  
+          
         <!-- Checkout Info -->                         
         <div class="col-lg-8 mb-3" >
+        
           <div th:if="${missingRequiredField}">
             <h5 class="alert alert-warning">There are some required fields missing.</h5>
-          </div>          
+          </div>  
+                  
           <div id="accordion">
+
             <div class="card">
               <div class="card-header bg-white" id="headingOne">
                 <h5 class="mb-0">
-                  <button class="btn btn-link checkout-header" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <a class="btn btn-link checkout-header" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     Bước 1: Kiểm tra giỏ hàng <i data-feather="chevron-down" class="mb-1"></i>
-                  </button>
+                  </a>
                 </h5>
               </div>
               <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
@@ -56,7 +59,7 @@
                   </div>                    
                   <div class="d-flex flex-wrap justify-content-between align-items-center mt-3">      
                     <a th:href="@{/shopping-cart/cart}" class="btn btn-info rounded-pill  "><i data-feather="arrow-left"></i> Thêm sản phẩm</a>           
-                    <a data-toggle="collapse" data-parent="#accordion"
+                    <a data-toggle="collapse" data-parent="#accordion" id="next1"
                         class="btn btn-primary rounded-pill " href="#collapseTwo">Bước tiếp theo <i data-feather="arrow-right"></i></a>
                   </div>
                 </div>                 
@@ -65,9 +68,9 @@
             <div class="card">
               <div class="card-header bg-white" id="headingTwo">
                 <h5 class="mb-0">
-                  <button class="btn btn-link checkout-header" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <a class="btn btn-link checkout-header" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                     Bước 2: Thông tin giao hàng <i data-feather="chevron-down" class="mb-1"></i>
-                  </button>
+                  </a>
                 </h5>
               </div>    
               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
@@ -75,29 +78,24 @@
                   <div class="form-row">
                     <div class="form-group col-12">
                       <label for="receiver">Họ và Tên người nhận</label> 
-                      <input type="text" class="form-control" id="ReciverName" name="ReciverName" required="required"/>
+                      <input type="text" class="form-control" id="ReciverName" name="ReciverName" required="required" th:value="${user?.address?.ReciverName}"/>
                     </div>  
                     <div class="form-group col-12">
                       <label for="streetAddress">Địa chỉ (Số nhà, quận, huyện, phường, xã,...)</label> 
-                      <input type="text" class="form-control" id="streetAddress" name="streetAddress" required="required" />
+                      <input type="text" class="form-control" id="streetAddress" name="streetAddress" required="required" th:value="${user?.address?.streetAddress}"/>
                     </div>
                     <div class="form-group col-4">
                       <label for="city">Thành phố</label> <input type="text"
                         class="form-control" id="city" th:name="city"
-                        required="required"/>
+                        required="required" th:value="${user?.address?.city}"/>
                     </div>
-<!--                     <div class="form-group col-4">
-                      <label for="country">Country</label> <input type="text"
-                        class="form-control" id="country" th:name="country"
-                        required="required"/>
-                    </div> -->
                     <div class="form-group col-4">
                       <label for="zipCode">Số điện thoại nhận hàng</label> <input
-                        type="text" class="form-control" id="ReciverPhoneNumber" th:name="ReciverPhoneNumber" required="required" />
+                        type="text" class="form-control" id="ReciverPhoneNumber" th:name="ReciverPhoneNumber" th:value="${user?.address?.ReciverPhoneNumber}" required="required" />
                     </div>                                       
                   </div>
                   <div class="mt-2 text-right">
-                    <a data-toggle="collapse" data-parent="#accordion"
+                    <a data-toggle="collapse" data-parent="#accordion" id="next2"
                       class="btn btn-primary rounded-pill" href="#collapseThree">Bước tiếp theo <i data-feather="arrow-right"></i></a>
                   </div>
                 </div>
@@ -106,9 +104,9 @@
             <div class="card">
               <div class="card-header bg-white" id="headingThree">
                 <h5 class="mb-0">
-                  <button class="btn btn-link checkout-header collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <a class="btn btn-link checkout-header collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                     Bước 3: Đặt cọc  <i data-feather="chevron-down" class="mb-1"></i>
-                  </button>
+                  </a>
                 </h5>
               </div>
               <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
@@ -127,8 +125,9 @@
 						   <strong th:text="${#numbers.formatDecimal((shoppingCart.getGrandTotal()*20)/100, 0, 'COMMA', 0, 'POINT')}+' ₫'"></strong>. <br/>
 						 <strong>- Nhập lời nhắn:</strong> <br/>
 						 	Cú pháp: <strong>Mã vận đơn</strong> + <strong>Số tiền cọc</strong> (Ví dụ: dkdfsyhuya 100K).<br/>
-						 	Mã vận đơn của bạn là <strong th:text="${shipmentCode}"></strong> <br/> 
-						 	<strong>LƯU Ý: </strong> Sau khi đặt cọc, shop sẽ liên hệ để xác minh danh tính và đơn hàng, nếu có thắc mắc xin vui lòng liên hệ <strong>0926881894</strong>.
+						 	Mã vận đơn của bạn là <strong class="badge badge-primary" th:text="${shipmentCode}"></strong> <br/> 
+						 	<p></p>
+						 	<small><strong>Lưu ý: </strong>Sau khi đặt cọc, shop sẽ liên hệ để xác minh danh tính và đơn hàng, nếu có thắc mắc xin vui lòng liên hệ <strong>0926881894</strong>.</small>
 <!--                       <div class="form-group">
                         <label for="cardType">Select Card Type: </label> <select
                           class="form-control" id="cardType" name="type">
@@ -203,12 +202,17 @@
                     </div>
                   </div>   -->
                   <div class="mt-2 text-right">
-                    <a data-toggle="collapse" data-parent="#accordion"
+                    <a data-toggle="collapse" data-parent="#accordion"  id="next3"
                       class="btn btn-primary rounded-pill" href="#collapseThree">Bước tiếp theo <i data-feather="arrow-right"></i></a>
                   </div>                
                 </div>                
               </div>
-            </div>            
+            </div>        
+             <div class="card card-header bg-white mb-1 mt-1">
+	          	<div class="progress">
+	  				<div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%">25%</div>
+          		</div>
+          	</div>    
           </div> <!--  end accordion -->          
         </div>
         
@@ -252,7 +256,33 @@
   
   <div th:replace="common/header :: footer"> </div>  
   <div th:replace="common/header :: body-scripts"> </div>
- 
+  <script type="text/javascript">
+  $(document).ready(function() {
+	  $('#next1').click(function () {
+	        $('#progress').css("width",'50%');
+	        $('#progress').text("50%");
+	    });
+	});
+  $(document).ready(function() {
+	  $('#next2').click(function () {
+	        $('#progress').css("width",'75%');
+	        $('#progress').text("75%");
+	    });
+	});
+  $(document).ready(function() {
+	  $('#next3').click(function () {
+	        $('#progress').css("width",'100%');
+	        $('#progress').text("100%");
+	        
+	        function show_popup(){
+	        	 $('#progress').text("Bạn đã hoàn thành xong các bước.");
+	        	 
+	         };
+	         window.setTimeout( show_popup, 1500 );
+	         
+	    });
+	});
+  </script>
   
 </body>
 </html>
